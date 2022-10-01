@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
 # Inital paths and filenames
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     XPUI_PATH="/usr/share/spotify/Apps";;
+    Darwin*)    XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps";;
+esac
+echo "XPUI_PATH=${XPUI_PATH}"
 XPUI="xpui"
-XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
 XPUI_ZIP="xpui.zip"
