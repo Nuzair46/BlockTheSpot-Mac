@@ -6,7 +6,7 @@ if [[ -d "~/Applications/Spotify.app" ]]; then
 elif [[ -d "/Applications/Spotify.app" ]]; then
     XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
 else
-    echo "Spotify.app not found.\nExiting..."
+    echo -e "Spotify.app not found.\nExiting..."
     exit
 fi
 

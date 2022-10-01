@@ -6,7 +6,7 @@ if [[ -d "~/Applications/Spotify.app" ]]; then
 elif [[ -d "/Applications/Spotify.app" ]]; then
     XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
 else
-    echo "Spotify.app not found.\nExiting..."
+    echo -e "Spotify.app not found.\nExiting..."
     exit
 fi
 
@@ -16,7 +16,7 @@ XPUI_SPA_BAK="xpui.bak"
 
 # Detect then uninstall patch
 if [[ ! -f "$XPUI_PATH/$XPUI_SPA_BAK"]]; then
-    echo "Backup file not found.\nExiting..."
+    echo -e "Backup file not found.\nExiting..."
     exit
 else
     echo "Removing patch..."
