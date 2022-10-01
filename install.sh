@@ -22,6 +22,12 @@ PATCH_UPGRADE_BUTTON_TEMP='"temporary"==='
 PATCH_AUDIO_AD='case 0:;case 4:this.subscription=this.audioApi.cosmosConnector.increaseStreamTime(-100000000000);'
 PATCH_BILLBOARD='(false?'
 
+# Credits
+echo "***************************************"
+echo "SpotX-Max by @nuzair46"
+echo "Thanks to @amd64fox for the original SpotX patch"
+echo "***************************************"
+
 # Create backup and extract xpui.js
 echo "Creating backup of xpui.spa"
 cp "$XPUI_PATH/$XPUI_SPA" "$XPUI_PATH/$XPUI_SPA_BAK"
