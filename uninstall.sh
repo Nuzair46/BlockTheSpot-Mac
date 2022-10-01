@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
 
+# Detect Installation Path
+if [[ -d "~/Applications/Spotify.app" ]]; then
+    XPUI_PATH="~/Applications/Spotify.app/Contents/Resources/Apps"
+elif [[ -d "/Applications/Spotify.app" ]]; then
+    XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
+else
+    echo "Spotify.app not found.\nExiting..."
+    exit
+fi
+
 # Inital paths and filenames
-XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
 
-# Uninstall patch
-echo "Removing patch..."
-cd "$XPUI_PATH"
-rm "$XPUI_SPA"
-mv "$XPUI_SPA_BAK" "$XPUI_SPA"
+# Detect then uninstall patch
+if [[ ! -f "$XPUI_PATH/$XPUI_SPA_BAK"]]; then
+    echo "Backup file not found.\nExiting..."
+    exit
+else
+    echo "Removing patch..."
+    cd "$XPUI_PATH"
+    rm "$XPUI_SPA"
+    mv "$XPUI_SPA_BAK" "$XPUI_SPA"
 
-echo "Patch removed successfully!"
+    echo "Patch removed successfully!"
+fi
