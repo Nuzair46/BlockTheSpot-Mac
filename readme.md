@@ -18,6 +18,7 @@
 
 ### Installation/Update:
 
+- Close Spotify completely.
 - Run The following command in Terminal:
 
 ```
@@ -26,6 +27,7 @@ curl -sL https://raw.githubusercontent.com/Nuzair46/SpotX-Mac/main/install.sh | 
 
 ### Uninstall:
 
+- Close Spotify completely.
 - Run The following command in Terminal:
 
 ```
@@ -38,7 +40,7 @@ or
 
 ### DISCLAIMER
 
-- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Mac or consequence of using those features will be the sole repsonsiblity of the user and not either BlockTheSpot or SpotX, SpotX-Mac team will be responsible.
+- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Mac or consequence of using those features will be the sole responsibility of the user and not either BlockTheSpot or SpotX, SpotX-Mac team will be responsible.
 
 ### Credits
 
