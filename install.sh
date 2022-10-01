@@ -24,7 +24,7 @@ PATCH_BILLBOARD='(false?'
 
 # Credits
 echo "***************************************"
-echo "SpotX-Max by @nuzair46"
+echo "SpotX-Mac by @nuzair46"
 echo "Thanks to @amd64fox for the original SpotX patch"
 echo "***************************************"
 
