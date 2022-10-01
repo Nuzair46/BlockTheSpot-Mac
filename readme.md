@@ -2,7 +2,7 @@
 
 <center>
     <h1 align="center">SpotX for MacOS</h1>
-    <h4 align="center">A multi-purpose adblocker and skip-bypass for the <strong>MacOS</strong> Spotify MacOS application.</h4>
+    <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify MacOS application.</h4>
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
         <strong>Last updated:</strong> 1 October 2022<br>
@@ -21,7 +21,7 @@
 - Run The following command in Terminal:
 
 ```
-
+curl -sL https://raw.githubusercontent.com/Nuzair46/SpotX-Mac/main/install.sh | bash
 ```
 
 ### Uninstall:
@@ -29,7 +29,7 @@
 - Run The following command in Terminal:
 
 ```
-
+curl -sL https://raw.githubusercontent.com/Nuzair46/SpotX-Mac/main/uninstall.sh | bash
 ```
 
 or
@@ -42,4 +42,4 @@ or
 
 ### Credits
 
-- Thanks to @amd64fox.
+- Thanks to [SpotX - amd64fox](https://github.com/amd64fox/spotx).
