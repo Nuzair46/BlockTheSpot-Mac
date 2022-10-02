@@ -22,7 +22,7 @@
 - Run The following command in Terminal:
 
 ```
-curl -sL https://raw.githubusercontent.com/Nuzair46/SpotX-Mac/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash
 ```
 
 ### Uninstall:
@@ -31,7 +31,7 @@ curl -sL https://raw.githubusercontent.com/Nuzair46/SpotX-Mac/main/install.sh | 
 - Run The following command in Terminal:
 
 ```
-curl -sL https://raw.githubusercontent.com/Nuzair46/SpotX-Mac/main/uninstall.sh | bash
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/uninstall.sh | bash
 ```
 
 or
