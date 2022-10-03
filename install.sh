@@ -7,6 +7,7 @@ elif [[ -d "/Applications/Spotify.app" ]]; then
     INSTALL_PATH="/Applications/Spotify.app"
 else
     echo -e "\nSpotify.app not found. Exiting...\n"
+    exit
 fi
 UPDATER_PATH="${HOME}/Library/Application Support/Spotify/PersistentCache/Update"
 XPUI="xpui"
