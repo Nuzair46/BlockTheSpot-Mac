@@ -6,8 +6,7 @@ if [[ -d "${HOME}/Applications/Spotify.app" ]]; then
 elif [[ -d "/Applications/Spotify.app" ]]; then
     INSTALL_PATH="/Applications/Spotify.app"
 else
-    INSTALL_PATH="/Applications/Spotify.app"
-    NOT_INSTALLED=yes
+    echo -e "\nSpotify.app not found. Exiting...\n"
 fi
 UPDATER_PATH="${HOME}/Library/Application Support/Spotify/PersistentCache/Update"
 XPUI="xpui"
@@ -37,101 +36,6 @@ echo "SpotX-Mac by @nuzair46"
 echo "Thanks to @amd64fox for the original SpotX patch"
 echo "************************************************"
 echo
-
-if [[ "$NOT_INSTALLED" == "yes" ]]; then
-    while true; do
-        read -n 1 -p 'Spotify.app not found, install Spotify? [Y/N] ' yn
-        case $yn in
-            [Yy]* )
-                DOWNLOAD_APP=yes
-                break;;
-            [Nn]* ) 
-                echo
-                echo -e "Exiting...\n"
-                exit
-                break;;
-                * ) echo -e "\nPlease enter yes or no.";;
-        esac
-    done
-else
-    while true; do
-        read -n 1 -p 'Do you want to download and install Spotify? [Y/N] ' yn
-        case $yn in
-            [Yy]* )
-                DOWNLOAD_APP=yes
-                break;;
-            [Nn]* ) 
-                DOWNLOAD_APP=no
-                break;;
-                * ) echo -e "\nPlease enter yes or no.";;
-        esac
-    done
-fi
-
-# Download and Install Spotify
-if [[ "$DOWNLOAD_APP" == "yes" ]]; then
-
-    # Detect Device Architecture
-    if [[ $(sysctl -n machdep.cpu.brand_string) =~ "Apple" ]]; then
-        buildarch=arm64
-        echo
-    else
-        buildarch=x86_64
-        echo
-    fi
-
-    # Build Number and Update Block Variables
-    read -p 'Enter desired build # (ex. 1.1.95.893.g6cf4d40c-39): ' buildno
-    while true; do
-        read -n 1 -p 'Do you want to block Spotify updates? [Y/N] ' yn
-        case $yn in
-            [Yy]* )
-                UPDATE_BLOCK=yes
-                break;;
-            [Nn]* ) 
-                UPDATE_BLOCK=no
-                break;;
-                * ) echo -e "\nPlease enter yes or no.";;
-        esac
-    done
-
-    # Download and Install
-    echo -e "\n\nDownloading...\n"
-    curl -f -o ${HOME}/Downloads/spotify-autoupdate-$buildno.tbz https://upgrade.scdn.co/upgrade/client/osx-$buildarch/spotify-autoupdate-$buildno.tbz && \
-    if [[ -d "${INSTALL_PATH}" ]]; then echo -e "\nDeleting current Spotify.app..." && osascript -e 'quit app "Spotify"' && rm -rf "${INSTALL_PATH}"; fi && \
-    echo "Installing..." && \
-    mkdir "${INSTALL_PATH}" && \
-    tar -xpjf ~/Downloads/spotify-autoupdate-$buildno.tbz -C "${INSTALL_PATH}" && \
-    echo "Cleaning up..." && rm ${HOME}/Downloads/spotify-autoupdate-$buildno.tbz
-else
-    # Update Block Variable
-    echo
-    while true; do
-        read -n 1 -p 'Do you want to block Spotify updates? [Y/N] ' yn
-        case $yn in
-            [Yy]* )
-                UPDATE_BLOCK=yes
-                echo
-                break;;
-            [Nn]* ) 
-                UPDATE_BLOCK=no
-                echo
-                break;;
-                * ) echo -e "\nPlease enter yes or no.";;
-        esac
-    done
-fi
-
-# Block Updates
-if [[ "$UPDATE_BLOCK" == "yes" ]]; then
-    echo "Blocking updates..."
-    chflags nouchg "${UPDATER_PATH}" 2> /dev/null
-    rm -rf "${UPDATER_PATH}"
-    mkdir -p "${UPDATER_PATH}"
-    chflags uchg "${UPDATER_PATH}"
-else
-    chflags nouchg "${UPDATER_PATH}" 2> /dev/null
-fi
 
 # Create backup and extract xpui.js
 echo "Creating backup of xpui.spa..."
