@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
 
 # Inital paths and filenames
-if [[ -d "${HOME}/Applications/Spotify.app" ]]; then
-    INSTALL_PATH="${HOME}/Applications/Spotify.app"
-elif [[ -d "/Applications/Spotify.app" ]]; then
-    INSTALL_PATH="/Applications/Spotify.app"
-else
-    echo -e "\nSpotify.app not found. Exiting...\n"
-    exit
-fi
 UPDATER_PATH="${HOME}/Library/Application Support/Spotify/PersistentCache/Update"
 XPUI="xpui"
-XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
 XPUI_ZIP="xpui.zip"
+
+APP_PATH="/Applications/Spotify.app"
+if [[ -d "${HOME}${APP_PATH}" ]]; then
+    INSTALL_PATH="${HOME}${APP_PATH}"
+elif [[ -d "${APP_PATH}" ]]; then
+    INSTALL_PATH="${APP_PATH}"
+else
+    echo -e "\nSpotify not found. Exiting...\n"
+    exit
+fi
+
+XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
 
 # Ad enablers
 AD_EMPTY_AD_BLOCK='adsEnabled:!0'
@@ -32,10 +35,9 @@ PATCH_AUDIO_AD='case 0:;case 4:this.subscription=this.audioApi.cosmosConnector.i
 PATCH_BILLBOARD='(false?'
 
 # Credits
-echo "************************************************"
-echo "SpotX-Mac by @nuzair46"
-echo "Thanks to @amd64fox for the original SpotX patch"
-echo "************************************************"
+echo "************************"
+echo "SpotX-Mac by @SpotX-CLI"
+echo "************************"
 echo
 
 # Create backup and extract xpui.js

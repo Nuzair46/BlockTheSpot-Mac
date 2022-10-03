@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
 
 # Inital paths and filenames
-if [[ -d "${HOME}/Applications/Spotify.app" ]]; then
-    XPUI_PATH="${HOME}/Applications/Spotify.app/Contents/Resources/Apps"
-elif [[ -d "/Applications/Spotify.app" ]]; then
-    XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
+APP_PATH="/Applications/Spotify.app"
+if [[ -d "${HOME}${APP_PATH}" ]]; then
+    INSTALL_PATH="${HOME}${APP_PATH}"
+elif [[ -d "${APP_PATH}" ]]; then
+    INSTALL_PATH="${APP_PATH}"
 else
-    echo -e "Spotify.app not found.\nExiting...\n"
+    echo -e "\nSpotify not found. Exiting...\n"
     exit
 fi
+XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
 
