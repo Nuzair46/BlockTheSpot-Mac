@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Inital paths and filenames
-UPDATER_PATH="${HOME}/Library/Application Support/Spotify/PersistentCache/Update"
 XPUI="xpui"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
