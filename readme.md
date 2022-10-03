@@ -6,7 +6,7 @@
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
         <strong>Last updated:</strong> 1 October 2022<br>
-        <strong>Last tested version:</strong> Spotify for macOS 1.1.95.893.g6cf4d40c
+        <strong>Last tested version:</strong> 1.1.95.893.g6cf4d40c-39
     </p> 
 </center>
 
