@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Inital paths and filenames
-if [[ -d "~/Applications/Spotify.app" ]]; then
+if [[ -d "${HOME}/Applications/Spotify.app" ]]; then
     INSTALL_PATH="${HOME}/Applications/Spotify.app"
 elif [[ -d "/Applications/Spotify.app" ]]; then
     INSTALL_PATH="/Applications/Spotify.app"
