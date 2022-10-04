@@ -19,6 +19,21 @@ fi
 
 XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
 
+# Script flags
+CACHE_FLAG=''
+
+while getopts 'c' flag; do
+  case "${flag}" in
+    c) 
+      CACHE_FLAG='true'
+      ;;
+    *) 
+      echo "Error: Flag not supported."
+      exit
+      ;;
+  esac
+done
+
 # Ad enablers
 AD_EMPTY_AD_BLOCK='adsEnabled:!0'
 AD_PLAYLIST_SPONSORS='allSponsorships'
@@ -84,7 +99,7 @@ perl -pi -w -e "s/\Q$MATCHED_STRING\E/$PATCH_BILLBOARD_AD/g;" $XPUI_JS
 # Rebuild xpui.spa
 echo "Rebuilding xpui.spa..."
 
-#zip files inside xpui folder
+# Zip files inside xpui folder
 cd "$XPUI"
 zip -r -qq "$XPUI_SPA" *
 mv "$XPUI_SPA" "$XPUI_PATH"
@@ -92,6 +107,9 @@ cd "$XPUI_PATH"
 rm -rf "$XPUI"
 
 # Delete app cache
-echo "Clearing app cache..."
-rm -rf "$CACHE_PATH"
+if [[ "${CACHE_FLAG}" == "true" ]]; then
+    echo "Clearing app cache..."
+    rm -rf "$CACHE_PATH"
+fi
+
 echo -e "Patch applied successfully!\n"
