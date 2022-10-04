@@ -90,4 +90,7 @@ mv "$XPUI_SPA" "$XPUI_PATH"
 cd "$XPUI_PATH"
 rm -rf "$XPUI"
 
+# Delete app cache
+echo "Clearing app cache..."
+rm -rf "${HOME}/Library/Caches/com.spotify.client"
 echo -e "Patch applied successfully!\n"
