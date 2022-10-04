@@ -20,7 +20,7 @@ fi
 XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
 
 # Script flags
-CACHE_FLAG=''
+CACHE_FLAG='false'
 
 while getopts 'c' flag; do
   case "${flag}" in
