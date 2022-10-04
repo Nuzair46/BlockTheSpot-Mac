@@ -5,6 +5,7 @@ XPUI="xpui"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
 XPUI_ZIP="xpui.zip"
+CACHE_PATH="${HOME}/Library/Caches/com.spotify.client"
 
 APP_PATH="/Applications/Spotify.app"
 if [[ -d "${HOME}${APP_PATH}" ]]; then
@@ -92,5 +93,5 @@ rm -rf "$XPUI"
 
 # Delete app cache
 echo "Clearing app cache..."
-rm -rf "${HOME}/Library/Caches/com.spotify.client"
+rm -rf "$CACHE_PATH"
 echo -e "Patch applied successfully!\n"
