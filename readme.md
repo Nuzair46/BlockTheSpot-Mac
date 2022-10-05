@@ -25,6 +25,12 @@
 curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash
 ```
 
+#### Optional
+- To clear cache (In case the above command doesn't hide upgrade button)
+```
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh -c | bash
+```
+
 ### Uninstall:
 
 - Close Spotify completely.
