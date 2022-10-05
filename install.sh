@@ -2,10 +2,37 @@
 
 # Inital paths and filenames
 XPUI="xpui"
-XPUI_PATH="/Applications/Spotify.app/Contents/Resources/Apps"
 XPUI_SPA="xpui.spa"
 XPUI_SPA_BAK="xpui.bak"
 XPUI_ZIP="xpui.zip"
+CACHE_PATH="${HOME}/Library/Caches/com.spotify.client"
+
+APP_PATH="/Applications/Spotify.app"
+if [[ -d "${HOME}${APP_PATH}" ]]; then
+    INSTALL_PATH="${HOME}${APP_PATH}"
+elif [[ -d "${APP_PATH}" ]]; then
+    INSTALL_PATH="${APP_PATH}"
+else
+    echo -e "\nSpotify not found. Exiting...\n"
+    exit
+fi
+
+XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
+
+# Script flags
+CACHE_FLAG='false'
+
+while getopts 'c' flag; do
+  case "${flag}" in
+    c) 
+      CACHE_FLAG='true'
+      ;;
+    *) 
+      echo "Error: Flag not supported."
+      exit
+      ;;
+  esac
+done
 
 # Ad enablers
 AD_EMPTY_AD_BLOCK='adsEnabled:!0'
@@ -23,16 +50,16 @@ PATCH_AUDIO_AD='case 0:;case 4:this.subscription=this.audioApi.cosmosConnector.i
 PATCH_BILLBOARD='(false?'
 
 # Credits
-echo "***************************************"
-echo "SpotX-Mac by @nuzair46"
-echo "Thanks to @amd64fox for the original SpotX patch"
-echo "***************************************"
+echo "************************"
+echo "SpotX-Mac by @SpotX-CLI"
+echo "************************"
+echo
 
 # Create backup and extract xpui.js
-echo "Creating backup of xpui.spa"
+echo "Creating backup of xpui.spa..."
 cp "$XPUI_PATH/$XPUI_SPA" "$XPUI_PATH/$XPUI_SPA_BAK"
 
-echo "Extracting xpui.js"
+echo "Extracting xpui.js..."
 cd "$XPUI_PATH"
 rm -rf "$XPUI"
 mv "$XPUI_SPA" "$XPUI_ZIP"
@@ -70,13 +97,19 @@ PATCH_BILLBOARD_AD=${MATCHED_STRING/$TO_PATCH/$PATCH_BILLBOARD}
 perl -pi -w -e "s/\Q$MATCHED_STRING\E/$PATCH_BILLBOARD_AD/g;" $XPUI_JS
 
 # Rebuild xpui.spa
-echo "Rebuilding xpui.spa"
+echo "Rebuilding xpui.spa..."
 
-#zip files inside xpui folder
+# Zip files inside xpui folder
 cd "$XPUI"
 zip -r -qq "$XPUI_SPA" *
 mv "$XPUI_SPA" "$XPUI_PATH"
 cd "$XPUI_PATH"
 rm -rf "$XPUI"
 
-echo "Patch applied successfully!"
+# Delete app cache
+if [[ "${CACHE_FLAG}" == "true" ]]; then
+    echo "Clearing app cache..."
+    rm -rf "$CACHE_PATH"
+fi
+
+echo -e "Patch applied successfully!\n"
