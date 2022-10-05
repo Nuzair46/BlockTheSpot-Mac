@@ -57,7 +57,12 @@ echo
 
 # Create backup and extract xpui.js
 echo "Creating backup of xpui.spa..."
-cp "$XPUI_PATH/$XPUI_SPA" "$XPUI_PATH/$XPUI_SPA_BAK"
+if [[ -f "${XPUI_PATH}/${XPUI_SPA_BAK}" ]]; then
+    echo "Found xpui.bak, skipping backup..."
+else
+    echo "Creating backup of xpui.spa..."
+    cp "${XPUI_PATH}/${XPUI_SPA}" "${XPUI_PATH}/${XPUI_SPA_BAK}"
+fi
 
 echo "Extracting xpui.js..."
 cd "$XPUI_PATH"
