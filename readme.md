@@ -25,6 +25,14 @@
 curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash
 ```
 
+#### Optional Install Arguments:
+`- c` Clear app cache [avoid conflicts with existing app data and SpotX without uninstall/reinstall | [#7](https://github.com/SpotX-CLI/SpotX-Mac/pull/7)]
+    
+```
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -c
+```
+
+
 ### Uninstall:
 
 - Close Spotify completely.
