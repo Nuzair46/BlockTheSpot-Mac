@@ -26,7 +26,7 @@ curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh |
 ```
 
 #### Optional Install Arguments:
-`-c` Clear app cache [avoid conflicts with existing app data and SpotX without uninstall/reinstall | [#7](https://github.com/SpotX-CLI/SpotX-Mac/pull/7)]
+`-c` Clear app cache in case patch doesn't work correctly.
     
 ```
 curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -c
