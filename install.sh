@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
 # Inital paths and filenames
-XPUI="xpui"
-XPUI_SPA="xpui.spa"
-XPUI_SPA_BAK="xpui.bak"
-XPUI_ZIP="xpui.zip"
-CACHE_PATH="${HOME}/Library/Caches/com.spotify.client"
 
 APP_PATH="/Applications/Spotify.app"
 if [[ -d "${HOME}${APP_PATH}" ]]; then
-    INSTALL_PATH="${HOME}${APP_PATH}"
+  INSTALL_PATH="${HOME}${APP_PATH}"
 elif [[ -d "${APP_PATH}" ]]; then
-    INSTALL_PATH="${APP_PATH}"
+  INSTALL_PATH="${APP_PATH}"
 else
-    echo -e "\nSpotify not found. Exiting...\n"
-    exit
+  echo -e "\nSpotify not found. Exiting...\n"
+  exit
 fi
 
+CACHE_PATH="${HOME}/Library/Caches/com.spotify.client"
 XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
+XPUI_DIR="${XPUI_PATH}/xpui"
+XPUI_BAK="${XPUI_PATH}/xpui.bak"
+XPUI_SPA="${XPUI_PATH}/xpui.spa"
+XPUI_JS="${XPUI_DIR}/xpui.js"
+VENDOR_XPUI_JS="${XPUI_DIR}/vendor~xpui.js"
 
 # Script flags
 CACHE_FLAG='false'
@@ -34,20 +35,20 @@ while getopts 'c' flag; do
   esac
 done
 
-# Ad enablers
-AD_EMPTY_AD_BLOCK='adsEnabled:!0'
-AD_PLAYLIST_SPONSORS='allSponsorships'
-AD_UPGRADE_BUTTON_FREE='"free"==='
-AD_UPGRADE_BUTTON_PREMIUM='"premium"==='
-AD_AUDIO_AD_REGEX='case 0:return this\.enabled=!0,this\.onInfoCallback=t,e\.next=4,this\.audioApi\.addNewSlot\([a-z],"audio"\);case 4:this\.subscription=this\.audioApi\.subscribeToSlotType\([a-z],this\.onAdMessage\);'
-AD_BILLBOARD_REGEX='concat\(\([0]\,[a-zA-Z]\.[a-zA-Z]\)\([e]\?'
+# Perl command
+PERL="perl -pi -w -e"
 
-# Ad disablers
-PATCH_EMPTY_AD_BLOCK='adsEnabled:!1'
-PATCH_PLAYLIST_SPONSORS=''
-PATCH_UPGRADE_BUTTON_TEMP='"temporary"==='
-PATCH_AUDIO_AD='case 0:;case 4:this.subscription=this.audioApi.cosmosConnector.increaseStreamTime(-100000000000);'
-PATCH_BILLBOARD='(false?'
+# Ad-related regex
+AD_EMPTY_AD_BLOCK='s|adsEnabled:\!\K0|1|'
+AD_PLAYLIST_SPONSORS='s|allSponsorships||'
+AD_UPGRADE_BUTTON='s/(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===/$1"premium"===$2$3"free"===/g'
+AD_AUDIO_ADS='s|(case .:)return this.enabled=...+?(;case .:this.subscription=this.audioApi).+?(;case .)|$1$2.cosmosConnector.increaseStreamTime(-100000000000)$3|'
+AD_BILLBOARD='s|.(\?\[..\(..leaderboard,)|false$1|'
+AD_UPSELL='s|(Enables quicksilver in-app messaging modal",default:)(!0)|$1false|s'
+
+# Log-related regex
+LOG_1='s|sp://logging/v3/\w+||g'
+LOG_SENTRY='s|this\.getStackTop\(\)\.client=e|return;$&|'
 
 # Credits
 echo "************************"
@@ -58,63 +59,55 @@ echo
 # Create backup and extract xpui.js
 echo "Creating backup of xpui.spa..."
 if [[ -f "${XPUI_PATH}/${XPUI_SPA_BAK}" ]]; then
-    echo "Found xpui.bak, skipping backup..."
+  echo "Found xpui.bak, skipping backup..."
 else
-    echo "Creating backup of xpui.spa..."
-    cp "${XPUI_PATH}/${XPUI_SPA}" "${XPUI_PATH}/${XPUI_SPA_BAK}"
+  echo "Creating backup of xpui.spa..."
+  cp "${XPUI_SPA}" "${XPUI_BAK}"
 fi
 
 echo "Extracting xpui.js..."
-cd "$XPUI_PATH"
-rm -rf "$XPUI"
-mv "$XPUI_SPA" "$XPUI_ZIP"
-unzip -qq "$XPUI_ZIP" -d "$XPUI"
-rm "$XPUI_ZIP"
-XPUI_JS=$(find "$XPUI" -name "xpui.js")
+unzip -qq "${XPUI_SPA}" -d "${XPUI_DIR}"
+rm "${XPUI_SPA}"
 
 # Remove Ads
-echo "Applying the patch..."
+echo "Applying SpotX patches..."
 
 # Remove Empty ad block
 echo "Removing empty ad block..."
-perl -pi -w -e "s/$AD_EMPTY_AD_BLOCK/$PATCH_EMPTY_AD_BLOCK/" $XPUI_JS
+$PERL "${AD_EMPTY_AD_BLOCK}" "${XPUI_JS}"
 
 # Remove Playlist sponsors
 echo "Removing playlist sponsors..."
-perl -pi -w -e "s/$AD_PLAYLIST_SPONSORS/$PATCH_PLAYLIST_SPONSORS/" $XPUI_JS
+$PERL "${AD_PLAYLIST_SPONSORS}" "${XPUI_JS}"
 
 # Remove Upgrade button
 echo "Removing upgrade button..."
-perl -pi -w -e "s/$AD_UPGRADE_BUTTON_PREMIUM/$PATCH_UPGRADE_BUTTON_TEMP/g" $XPUI_JS
-perl -pi -w -e "s/$AD_UPGRADE_BUTTON_FREE/$AD_UPGRADE_BUTTON_PREMIUM/g" $XPUI_JS
-perl -pi -w -e "s/$PATCH_UPGRADE_BUTTON_TEMP/$AD_UPGRADE_BUTTON_FREE/g" $XPUI_JS
+$PERL "${AD_UPGRADE_BUTTON}" "${XPUI_JS}"
 
 # Remove Audio ads
 echo "Removing audio ads..."
-perl -pi -w -e "s/$AD_AUDIO_AD_REGEX/$PATCH_AUDIO_AD/g;" $XPUI_JS
+$PERL "${AD_AUDIO_ADS}" "${XPUI_JS}"
 
 # Remove billboard ads
 echo "Removing billboard ads..."
-# get matched string
-MATCHED_STRING=$(grep -E -o "$AD_BILLBOARD_REGEX" $XPUI_JS)
-TO_PATCH='(e?'
-PATCH_BILLBOARD_AD=${MATCHED_STRING/$TO_PATCH/$PATCH_BILLBOARD}
-perl -pi -w -e "s/\Q$MATCHED_STRING\E/$PATCH_BILLBOARD_AD/g;" $XPUI_JS
+$PERL "${AD_BILLBOARD}" "${XPUI_JS}"
+
+# Remove logging
+echo "Removing logging..."
+$PERL "${LOG_1}" "${XPUI_JS}"
+$PERL "${LOG_SENTRY}" "${VENDOR_XPUI_JS}"
 
 # Rebuild xpui.spa
 echo "Rebuilding xpui.spa..."
 
 # Zip files inside xpui folder
-cd "$XPUI"
-zip -r -qq "$XPUI_SPA" *
-mv "$XPUI_SPA" "$XPUI_PATH"
-cd "$XPUI_PATH"
-rm -rf "$XPUI"
+(cd "${XPUI_DIR}"; zip -qq -r ../xpui.spa .)
+rm -rf "${XPUI_DIR}"
 
 # Delete app cache
 if [[ "${CACHE_FLAG}" == "true" ]]; then
-    echo "Clearing app cache..."
-    rm -rf "$CACHE_PATH"
+  echo "Clearing app cache..."
+  rm -rf "$CACHE_PATH"
 fi
 
 echo -e "Patch applied successfully!\n"
