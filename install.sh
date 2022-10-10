@@ -127,9 +127,9 @@ if [[ "${PREMIUM_FLAG}" == "false" ]]; then
   # Remove Premium-only features
   echo "Removing premium-only features..."
   $PERL "${HIDE_DL_QUALITY}" "${XPUI_JS}"
-  echo >> "${HIDE_DL_ICON}" "${XPUI_CSS}"
-  echo >> "${HIDE_DL_MENU}" "${XPUI_CSS}"
-  echo >> "${HIDE_VERY_HIGH}" "${XPUI_CSS}"
+  echo "${HIDE_DL_ICON}" >> "${XPUI_CSS}"
+  echo "${HIDE_DL_MENU}" >> "${XPUI_CSS}"
+  echo "${HIDE_VERY_HIGH}" >> "${XPUI_CSS}"
   
   # Unlock Spotify Connect
   echo "Unlocking Spotify Connect..."
