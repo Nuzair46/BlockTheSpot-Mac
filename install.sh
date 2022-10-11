@@ -23,15 +23,18 @@ VENDOR_XPUI_JS="${XPUI_DIR}/vendor~xpui.js"
 
 # Script flags
 CACHE_FLAG='false'
+FORCE_FLAG='false'
 HIDE_PODCASTS_FLAG='false'
 OLD_UI_FLAG='false'
 PREMIUM_FLAG='false'
 UPDATE_FLAG='false'
 
-while getopts 'chopu' flag; do
+while getopts 'cfhopu' flag; do
   case "${flag}" in
     c) 
       CACHE_FLAG='true' ;;
+    f) 
+      FORCE_FLAG='true' ;;
     h)
       HIDE_PODCASTS_FLAG='true' ;;
     o)
@@ -86,85 +89,112 @@ echo "SpotX-Mac by @SpotX-CLI"
 echo "************************"
 echo
 
-# Create backup and extract xpui.js
-if [[ -f "${XPUI_BAK}" ]]; then
-  echo "Found xpui.bak, restoring backup..."
-  rm "${XPUI_SPA}"
-  cp "${XPUI_BAK}" "${XPUI_SPA}"
+# Handle xpui.bak and FORCE_FLAG logic
+if [[ "${FORCE_FLAG}" == "false" ]]; then
+  if [[ -f "${XPUI_BAK}" ]]; then
+    echo "SpotX backup found, SpotX has already been used on this install."
+    echo -e "Re-run SpotX using the '-f' flag to force xpui patching.\n"
+    echo "Skipping xpui patches and continuing SpotX..."
+    XPUI_SKIP="true"
+  else
+    echo "Creating xpui backup..."
+    cp "${XPUI_SPA}" "${XPUI_BAK}"
+    XPUI_SKIP="false"; fi
 else
-  echo "Creating backup of xpui.spa..."
-  cp "${XPUI_SPA}" "${XPUI_BAK}"; fi
+  if [[ -f "${XPUI_BAK}" ]]; then
+    echo "Backup xpui found, restoring original..."
+    rm "${XPUI_SPA}"
+    cp "${XPUI_BAK}" "${XPUI_SPA}"
+    XPUI_SKIP="false"
+  else
+    echo "Creating xpui backup..."
+    cp "${XPUI_SPA}" "${XPUI_BAK}"
+    XPUI_SKIP="false"; fi; fi
 
-echo "Extracting xpui.js..."
-unzip -qq "${XPUI_SPA}" -d "${XPUI_DIR}"
-rm "${XPUI_SPA}"
+# Extract xpui.spa
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  echo "Extracting xpui..."
+  unzip -qq "${XPUI_SPA}" -d "${XPUI_DIR}"
+  if grep -Fq "SpotX" "${XPUI_JS}"; then
+    echo -e "\nWarning: Detected SpotX patches but no backup file!"
+    echo -e "Further xpui patching not allowed until Spotify is reinstalled/upgraded.\n"
+    echo "Skipping xpui patches and continuing SpotX..."
+    XPUI_SKIP="true"
+    rm "${XPUI_BAK}" 2>/dev/null
+    rm -rf "${XPUI_DIR}" 2>/dev/null
+  else
+    rm "${XPUI_SPA}"; fi; fi
 
 echo "Applying SpotX patches..."
 
-if [[ "${PREMIUM_FLAG}" == "false" ]]; then
-  # Remove Empty ad block
-  echo "Removing empty ad block..."
-  $PERL "${AD_EMPTY_AD_BLOCK}" "${XPUI_JS}"
-  
-  # Remove Playlist sponsors
-  echo "Removing playlist sponsors..."
-  $PERL "${AD_PLAYLIST_SPONSORS}" "${XPUI_JS}"
-  
-  # Remove Upgrade button
-  echo "Removing upgrade button..."
-  $PERL "${AD_UPGRADE_BUTTON}" "${XPUI_JS}"
-  
-  # Remove Audio ads
-  echo "Removing audio ads..."
-  $PERL "${AD_AUDIO_ADS}" "${XPUI_JS}"
-  
-  # Remove billboard ads
-  echo "Removing billboard ads..."
-  $PERL "${AD_BILLBOARD}" "${XPUI_JS}"
-  
-  # Remove premium upsells
-  echo "Removing premium upselling..."
-  $PERL "${AD_UPSELL}" "${XPUI_JS}"
-  
-  # Remove Premium-only features
-  echo "Removing premium-only features..."
-  $PERL "${HIDE_DL_QUALITY}" "${XPUI_JS}"
-  echo "${HIDE_DL_ICON}" >> "${XPUI_CSS}"
-  echo "${HIDE_DL_MENU}" >> "${XPUI_CSS}"
-  echo "${HIDE_VERY_HIGH}" >> "${XPUI_CSS}"
-  
-  # Unlock Spotify Connect
-  echo "Unlocking Spotify Connect..."
-  $PERL "${CONNECT_1}" "${XPUI_JS}"
-  $PERL "${CONNECT_2}" "${XPUI_JS}"
-  $PERL "${CONNECT_3}" "${XPUI_JS}"
-  $PERL "${CONNECT_4}" "${XPUI_JS}"
-else
-  echo "Premium subscription setup selected..."; fi
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  if [[ "${PREMIUM_FLAG}" == "false" ]]; then
+    # Remove Empty ad block
+    echo "Removing empty ad block..."
+    $PERL "${AD_EMPTY_AD_BLOCK}" "${XPUI_JS}"
+    
+    # Remove Playlist sponsors
+    echo "Removing playlist sponsors..."
+    $PERL "${AD_PLAYLIST_SPONSORS}" "${XPUI_JS}"
+    
+    # Remove Upgrade button
+    echo "Removing upgrade button..."
+    $PERL "${AD_UPGRADE_BUTTON}" "${XPUI_JS}"
+    
+    # Remove Audio ads
+    echo "Removing audio ads..."
+    $PERL "${AD_AUDIO_ADS}" "${XPUI_JS}"
+    
+    # Remove billboard ads
+    echo "Removing billboard ads..."
+    $PERL "${AD_BILLBOARD}" "${XPUI_JS}"
+    
+    # Remove premium upsells
+    echo "Removing premium upselling..."
+    $PERL "${AD_UPSELL}" "${XPUI_JS}"
+    
+    # Remove Premium-only features
+    echo "Removing premium-only features..."
+    $PERL "${HIDE_DL_QUALITY}" "${XPUI_JS}"
+    echo "${HIDE_DL_ICON}" >> "${XPUI_CSS}"
+    echo "${HIDE_DL_MENU}" >> "${XPUI_CSS}"
+    echo "${HIDE_VERY_HIGH}" >> "${XPUI_CSS}"
+    
+    # Unlock Spotify Connect
+    echo "Unlocking Spotify Connect..."
+    $PERL "${CONNECT_1}" "${XPUI_JS}"
+    $PERL "${CONNECT_2}" "${XPUI_JS}"
+    $PERL "${CONNECT_3}" "${XPUI_JS}"
+    $PERL "${CONNECT_4}" "${XPUI_JS}"
+  else
+    echo "Premium subscription setup selected..."; fi; fi
 
 # Remove logging
-echo "Removing logging..."
-$PERL "${LOG_1}" "${XPUI_JS}"
-$PERL "${LOG_SENTRY}" "${VENDOR_XPUI_JS}"
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  echo "Removing logging..."
+  $PERL "${LOG_1}" "${XPUI_JS}"
+  $PERL "${LOG_SENTRY}" "${VENDOR_XPUI_JS}"; fi
 
 # Handle UI view | this will soon become obsolete
-if [[ "${OLD_UI_FLAG}" == "true" ]]; then
-  echo "Skipping new home UI patch..."
-else
-  echo "Forcing new home UI..."
-  $PERL "${NEW_UI}" "${XPUI_JS}"; fi
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  if [[ "${OLD_UI_FLAG}" == "true" ]]; then
+    echo "Skipping new home UI patch..."
+  else
+    echo "Forcing new home UI..."
+    $PERL "${NEW_UI}" "${XPUI_JS}"; fi; fi
 
 # Hide podcasts, episodes and audiobooks on home screen
-if [[ "${HIDE_PODCASTS_FLAG}" == "true" ]]; then
-  echo "Hiding non-music items on home screen..."
-  $PERL "${HIDE_PODCASTS}" "${HOME_V2_JS}"; fi
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  if [[ "${HIDE_PODCASTS_FLAG}" == "true" ]]; then
+    echo "Hiding non-music items on home screen..."
+    $PERL "${HIDE_PODCASTS}" "${HOME_V2_JS}"; fi; fi
 
 # Delete app cache
 if [[ "${CACHE_FLAG}" == "true" ]]; then
   echo "Clearing app cache..."
   rm -rf "$CACHE_PATH"; fi
   
-# Update handling
+# Automatic updates handling
 if [[ "${UPDATE_FLAG}" == "true" ]]; then
   echo "Blocking updates..."
   if [[ -d "${UPDATE_PATH}" ]]; then
@@ -180,10 +210,13 @@ else
     chflags nouchg "${UPDATE_PATH}" 2>/dev/null; fi; fi
   
 # Rebuild xpui.spa
-echo "Rebuilding xpui.spa..."
-  
-# Zip files inside xpui folder
-(cd "${XPUI_DIR}"; zip -qq -r ../xpui.spa .)
-rm -rf "${XPUI_DIR}"
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  echo "Rebuilding xpui..."
+  echo -e "\n//# SpotX was here" >> "${XPUI_JS}"; fi
 
-echo -e "SpotX patches applied successfully!\n"
+# Zip files inside xpui folder
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  (cd "${XPUI_DIR}"; zip -qq -r ../xpui.spa .)
+  rm -rf "${XPUI_DIR}"; fi
+
+echo -e "SpotX finished!\n"
