@@ -61,7 +61,7 @@ AD_UPSELL='s|(Enables quicksilver in-app messaging modal",default:)(!0)|$1false|
 NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
 
 # Hide Premium-only features
-HIDE_DL_QUALITY='s/(.\("audio.play_bitrate_enumeration",.\)},)children:.*\(.,.\)}\).+\("audio.sync_bitrate_enumeration",.\)},(children:.*\(.,.\)}\)}\)]}\))/$1$2/'
+HIDE_DL_QUALITY='s/(children:..\(.,.\)|xe\(.,.\)\)\)\)).+?(children:..\(.,.\)|xe\(.,.\)\)\)\))/$1/'
 HIDE_DL_ICON=' .BKsbV2Xl786X9a09XROH {display:none}'
 HIDE_DL_MENU=' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA {display:none}'
 HIDE_VERY_HIGH=' #desktop\.settings\.streamingQuality>option:nth-child(5) {display:none}'
