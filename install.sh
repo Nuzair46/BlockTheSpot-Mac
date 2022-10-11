@@ -88,7 +88,9 @@ echo
 
 # Create backup and extract xpui.js
 if [[ -f "${XPUI_BAK}" ]]; then
-  echo "Found xpui.bak, skipping backup..."
+  echo "Found xpui.bak, restoring backup..."
+  rm "${XPUI_SPA}"
+  cp "${XPUI_BAK}" "${XPUI_SPA}"
 else
   echo "Creating backup of xpui.spa..."
   cp "${XPUI_SPA}" "${XPUI_BAK}"; fi
