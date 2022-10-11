@@ -1,12 +1,12 @@
 [![Discord](https://discord.com/api/guilds/807273906872123412/widget.png)](https://discord.gg/p43cusgUPm)
 
 <center>
-    <h1 align="center">SpotX for MacOS</h1>
-    <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify MacOS application.</h4>
+    <h1 align="center">SpotX for macOS</h1>
+    <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify macOS application.</h4>
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
-        <strong>Last updated:</strong> 1 October 2022<br>
-        <strong>Last tested version:</strong> Spotify for macOS 1.1.95.893.g6cf4d40c
+        <strong>Last updated:</strong> 11 October 2022<br>
+        <strong>Last tested version:</strong> 1.1.96.783.ga553e8b1
     </p> 
 </center>
 
@@ -15,6 +15,8 @@
 - Blocks all banner/video/audio ads within the app
 - Retains friend, vertical video and radio functionality
 - Unlocks the skip function for any track
+- Blocks Spotify automatic updates (optional)
+- Hides podcasts, episodes and audiobooks (optional)
 
 ### Installation/Update:
 
@@ -26,10 +28,17 @@ curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh |
 ```
 
 #### Optional Install Arguments:
-`-c` Clear app cache in case patch doesn't work correctly.
+`-c` Clear app cache -- use if patch doesn't work correctly  
+`-h` Hide podcasts, episodes and audiobooks on home screen  
+`-o` Old UI -- skips forced 'new UI' patch  
+`-p` Premium subscription setup -- use if premium subscriber  
+`-u` Update block -- use to block automatic updates  
+
+Use any combination of flags.  
+The following example clears app cache, skips new UI patch and blocks updates:
     
 ```
-curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -c
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -cou
 ```
 
 
