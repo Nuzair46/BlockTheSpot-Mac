@@ -54,7 +54,7 @@ AD_EMPTY_AD_BLOCK='s|adsEnabled:!0|adsEnabled:!1|'
 AD_PLAYLIST_SPONSORS='s|allSponsorships||'
 AD_UPGRADE_BUTTON='s/(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===/$1"premium"===$2$3"free"===/g'
 AD_AUDIO_ADS='s|(case .:)return this.enabled=...+?(;case .:this.subscription=this.audioApi).+?(;case .)|$1$2.cosmosConnector.increaseStreamTime(-100000000000)$3|'
-AD_BILLBOARD='s|.(\?\[..\(..leaderboard,)|false$1|'
+AD_BILLBOARD='s|.(\?\[....\.leaderboard,)|false$1|'
 AD_UPSELL='s|(Enables quicksilver in-app messaging modal",default:)(!0)|$1false|'
 
 # Home screen UI (new) | this will soon become obsolete
