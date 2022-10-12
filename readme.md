@@ -28,8 +28,8 @@ curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh |
 ```
 
 #### Optional Install Arguments:
-`-c`  Clear app cache -- use if UI-related patches aren't working
-`-f`  Force patch -- use if backup detected and want to force patch
+`-c`  Clear app cache -- use if UI-related patches aren't working  
+`-f`  Force patch -- use if backup detected and want to force patch  
 `-h`  Hide podcasts, episodes and audiobooks on home screen  
 `-o`  Old UI -- skips forced 'new UI' patch  
 `-p`  Premium subscription setup -- use if premium subscriber  
