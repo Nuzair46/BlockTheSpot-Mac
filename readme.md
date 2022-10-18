@@ -49,7 +49,7 @@ curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/install.sh
 - Run The following command in Terminal:
 
 ```
-curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/install.sh | bash
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/uninstall.sh | bash
 ```
 
 or
