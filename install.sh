@@ -219,4 +219,4 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
   (cd "${XPUI_DIR}"; zip -qq -r ../xpui.spa .)
   rm -rf "${XPUI_DIR}"; fi
 
-echo -e "SpotX finished!\n"
+echo -e "SpotX finished patching!\n"
