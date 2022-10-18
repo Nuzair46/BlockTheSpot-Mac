@@ -5,8 +5,8 @@
     <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify macOS application.</h4>
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
-        <strong>Last updated:</strong> 11 October 2022<br>
-        <strong>Last tested version:</strong> 1.1.96.783.ga553e8b1
+        <strong>Last updated:</strong> 18 October 2022<br>
+        <strong>Last tested version:</strong> 1.1.96.785.g464c973a
     </p> 
 </center>
 
