@@ -24,7 +24,7 @@
 - Run The following command in Terminal:
 
 ```
-curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/install.sh | bash
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash
 ```
 
 #### Optional Install Arguments:
@@ -39,7 +39,7 @@ Use any combination of flags.
 The following example clears app cache, skips new UI patch and blocks updates:
     
 ```
-curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/install.sh | bash -s -- -cou
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -cou
 ```
 
 
@@ -49,7 +49,7 @@ curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/install.sh
 - Run The following command in Terminal:
 
 ```
-curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/master/uninstall.sh | bash
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/uninstall.sh | bash
 ```
 
 or
