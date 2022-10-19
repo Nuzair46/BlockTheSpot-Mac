@@ -23,16 +23,19 @@ VENDOR_XPUI_JS="${XPUI_DIR}/vendor~xpui.js"
 
 # Script flags
 CACHE_FLAG='false'
+EXPERIMENTAL_FLAG='false'
 FORCE_FLAG='false'
 HIDE_PODCASTS_FLAG='false'
 OLD_UI_FLAG='false'
 PREMIUM_FLAG='false'
 UPDATE_FLAG='false'
 
-while getopts 'cfhopu' flag; do
+while getopts 'cefhopu' flag; do
   case "${flag}" in
     c) 
       CACHE_FLAG='true' ;;
+    e) 
+      EXPERIMENTAL_FLAG='true' ;;
     f) 
       FORCE_FLAG='true' ;;
     h)
@@ -59,6 +62,25 @@ AD_UPGRADE_BUTTON='s/(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===/$1"p
 AD_AUDIO_ADS='s|(case .:)return this.enabled=...+?(;case .:this.subscription=this.audioApi).+?(;case .)|$1$2.cosmosConnector.increaseStreamTime(-100000000000)$3|'
 AD_BILLBOARD='s|.(\?\[....\.leaderboard,)|false$1|'
 AD_UPSELL='s|(Enables quicksilver in-app messaging modal",default:)(!0)|$1false|'
+
+# Experimental (A/B test) features
+ENABLE_BALLOONS='s|(Enable showing balloons on album release date anniversaries",default:)(!1)|$1true|s'
+ENABLE_BLOCK_USERS='s|(Enable block users feature in clientX",default:)(!1)|$1true|s'
+ENABLE_CAROUSELS='s|(Use carousels on Home",default:)(!1)|$1true|s'
+ENABLE_CLEAR_DOWNLOADS='s|(Enable option in settings to clear all downloads",default:)(!1)|$1true|s'
+ENABLE_DISCOG_SHELF='s|(Enable a condensed disography shelf on artist pages",default:)(!1)|$1true|s'
+ENABLE_ENHANCE_PLAYLIST='s|(Enable Enhance Playlist UI and functionality for end-users",default:)(!1)|$1true|s'
+ENABLE_ENHANCE_SONGS='s|(Enable Enhance Liked Songs UI and functionality",default:)(!1)|$1true|s'
+ENABLE_EQUALIZER='s|(Enable audio equalizer for Desktop and Web Player",default:)(!1)|$1true|s'
+ENABLE_IGNORE_REC='s|(Enable Ignore In Recommendations for desktop and web",default:)(!1)|$1true|s'
+ENABLE_LIKED_SONGS='s|(Enable Liked Songs section on Artist page",default:)(!1)|$1true|s'
+ENABLE_LYRICS_CHECK='s|(With this enabled, clients will check whether tracks have lyrics available",default:)(!1)|$1true|s'
+ENABLE_LYRICS_MATCH='s|(Enable Lyrics match labels in search results",default:)(!1)|$1true|s'
+ENABLE_NEW_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
+ENABLE_PLAYLIST_CREATION_FLOW='s|(Enables new playlist creation flow in Web Player and DesktopX",default:)(!1)|$1true|s'
+ENABLE_PLAYLIST_PERMISSIONS_FLOWS='s|(Enable Playlist Permissions flows for Prod",default:)(!1)|$1true|s'
+ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists when trying to add songs to a playlist using the contextmenu",default:)(!1)|$1true|s'
+ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
 # Home screen UI (new) | this will soon become obsolete
 NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
@@ -168,6 +190,28 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     $PERL "${CONNECT_4}" "${XPUI_JS}"
   else
     echo "Premium subscription setup selected..."; fi; fi
+
+# Experimental patches
+if [[ "${XPUI_SKIP}" == "false" ]]; then
+  if [[ "${EXPERIMENTAL_FLAG}" == "true" ]]; then
+    echo "Adding experimental features..."
+    $PERL "${ENABLE_BALLOONS}" "${XPUI_JS}"
+    $PERL "${ENABLE_BLOCK_USERS}" "${XPUI_JS}"
+    $PERL "${ENABLE_CAROUSELS}" "${XPUI_JS}"
+    $PERL "${ENABLE_CLEAR_DOWNLOADS}" "${XPUI_JS}"
+    $PERL "${ENABLE_DISCOG_SHELF}" "${XPUI_JS}"
+    $PERL "${ENABLE_ENHANCE_PLAYLIST}" "${XPUI_JS}"
+    $PERL "${ENABLE_ENHANCE_SONGS}" "${XPUI_JS}"
+    $PERL "${ENABLE_EQUALIZER}" "${XPUI_JS}"
+    $PERL "${ENABLE_IGNORE_REC}" "${XPUI_JS}"
+    $PERL "${ENABLE_LIKED_SONGS}" "${XPUI_JS}"
+    $PERL "${ENABLE_LYRICS_CHECK}" "${XPUI_JS}"
+    $PERL "${ENABLE_LYRICS_MATCH}" "${XPUI_JS}"
+    #$PERL "${ENABLE_NEW_SIDEBAR}" "${XPUI_JS}"
+    $PERL "${ENABLE_PLAYLIST_CREATION_FLOW}" "${XPUI_JS}"
+    $PERL "${ENABLE_PLAYLIST_PERMISSIONS_FLOWS}" "${XPUI_JS}"
+    $PERL "${ENABLE_SEARCH_BOX}" "${XPUI_JS}"
+    $PERL "${ENABLE_SIMILAR_PLAYLIST}" "${XPUI_JS}"; fi; fi
 
 # Remove logging
 if [[ "${XPUI_SKIP}" == "false" ]]; then

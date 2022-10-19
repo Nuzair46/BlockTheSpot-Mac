@@ -16,7 +16,8 @@
 - Retains friend, vertical video and radio functionality
 - Unlocks the skip function for any track
 - Blocks Spotify automatic updates (optional)
-- Hides podcasts, episodes and audiobooks (optional)
+- Enables [experimental features](https://github.com/SpotX-CLI/SpotX-Win/discussions/50) (optional)
+- Hides podcasts, episodes and audiobooks on Home Screen (optional)
 
 ### Installation/Update:
 
@@ -29,17 +30,18 @@ curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh |
 
 #### Optional Install Arguments:
 `-c`  Clear app cache -- use if UI-related patches aren't working  
-`-f`  Force patch -- use if backup detected and want to force patch  
+`-e`  Experimental features -- enables experimental features  
+`-f`  Force patch -- forces re-patching if backup detected  
 `-h`  Hide podcasts, episodes and audiobooks on home screen  
 `-o`  Old UI -- skips forced 'new UI' patch  
 `-p`  Premium subscription setup -- use if premium subscriber  
-`-u`  Update block -- use to block automatic updates  
+`-u`  Update block -- blocks automatic updates  
 
 Use any combination of flags.  
-The following example clears app cache, skips new UI patch and blocks updates:
+The following example clears app cache, adds experimental features and blocks updates:
     
 ```
-curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -cou
+curl -sL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh | bash -s -- -ceu
 ```
 
 
