@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# dependencies check
+command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2; exit 1; }
+command -v unzip >/dev/null || { echo -e "\nunzip was not found, exiting...\n" >&2; exit 1; }
+
 # Inital paths and filenames
 APP_PATH="/Applications/Spotify.app"
 if [[ -d "${HOME}${APP_PATH}" ]]; then
