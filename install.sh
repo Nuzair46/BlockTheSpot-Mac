@@ -118,8 +118,8 @@ echo
 
 # xpui detection
 if [[ ! -f "${XPUI_SPA}" ]]; then
-  echo "xpui not found, skipping xpui patches..."
-  XPUI_SKIP="true"
+  echo - e "\nxpui not found!\nReinstall Spotify then try again.\nExiting...\n"
+  exit
 else
   if [[ "${FORCE_FLAG}" == "false" ]]; then
     if [[ -f "${XPUI_BAK}" ]]; then
