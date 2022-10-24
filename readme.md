@@ -1,9 +1,16 @@
-[![Discord](https://discord.com/api/guilds/807273906872123412/widget.png)](https://discord.gg/p43cusgUPm)
+  <p align="center">
+  <a href="https://github.com/SpotX-CLI/SpotX-Win/releases"><img src="https://github.com/SpotX-CLI/SpotX-Mac/raw/main/.github/Pic/logo.png" />
+</p>
+
+<p align="center">        
+      <a href="https://t.me/spotify_windows_mod"><img src="https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/.github/Pic/Shields/tg.svg"></a>
+      <a href="https://discord.gg/p43cusgUPm"><img src="https://discord.com/api/guilds/807273906872123412/widget.png"></a>
+      </p>
+
+ ***     
 
 <center>
-    <h1 align="center">SpotX for macOS</h1>
     <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify macOS application.</h4>
-    <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
         <strong>Last updated:</strong> 18 October 2022<br>
         <strong>Last tested version:</strong> 1.1.96.785.g464c973a
