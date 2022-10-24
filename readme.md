@@ -1,5 +1,5 @@
   <p align="center">
-  <a href="https://github.com/SpotX-CLI/SpotX-Win/releases"><img src="https://github.com/SpotX-CLI/SpotX-Mac/raw/main/.github/Pic/logo.png" />
+  <a href="https://github.com/SpotX-CLI/SpotX-Mac"><img src="https://github.com/SpotX-CLI/SpotX-Mac/raw/main/.github/Pic/logo.png" />
 </p>
 
 <p align="center">        
