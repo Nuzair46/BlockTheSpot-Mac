@@ -63,7 +63,7 @@ PERL="perl -pi -w -e"
 AD_EMPTY_AD_BLOCK='s|adsEnabled:!0|adsEnabled:!1|'
 AD_PLAYLIST_SPONSORS='s|allSponsorships||'
 AD_UPGRADE_BUTTON='s/(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===/$1"premium"===$2$3"free"===/g'
-AD_AUDIO_ADS='s/(case .:|async enable\(.\)\{)(this.enabled=.+?\(.{1,3},"audio"\),\|return this.enabled=...+?\(.{1,3},"audio"\))((;case 4:)?this.subscription=this.audioApi).+?this.onAdMessage\)/$1$3.cosmosConnector.increaseStreamTime(-100000000000)/'
+AD_AUDIO_ADS='s/(case .:|async enable\(.\)\{)(this.enabled=.+?\(.{1,3},"audio"\),|return this.enabled=...+?\(.{1,3},"audio"\))((;case 4:)?this.subscription=this.audioApi).+?this.onAdMessage\)/$1$3.cosmosConnector.increaseStreamTime(-100000000000)/'
 AD_BILLBOARD='s|.(\?\[....\.leaderboard,)|false$1|'
 AD_UPSELL='s|(Enables quicksilver in-app messaging modal",default:)(!0)|$1false|'
 
