@@ -87,7 +87,7 @@ ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists wh
 ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
 # Home screen UI (new) | this will soon become obsolete
-NEW_UI='s|(Enable the new home structure and navigation\",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
+NEW_UI='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|..createElement\(.{1,4}),\{filterMatchQuery:.{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|xe\(.,.\).+?,)//'
