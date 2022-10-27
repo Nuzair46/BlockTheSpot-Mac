@@ -26,6 +26,12 @@ XPUI_CSS="${XPUI_DIR}/xpui.css"
 HOME_V2_JS="${XPUI_DIR}/home-v2.js"
 VENDOR_XPUI_JS="${XPUI_DIR}/vendor~xpui.js"
 
+# Find client version
+CLIENT_VERSION=$(awk '/CFBundleShortVersionString/{getline; print}' "${INSTALL_PATH}/Contents/Info.plist" | cut -d\> -f2- | rev | cut -d. -f2- | rev)
+
+# Version function for version comparison
+function ver { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
+
 # Script flags
 CACHE_FLAG='false'
 EXPERIMENTAL_FLAG='false'
@@ -37,20 +43,13 @@ UPDATE_FLAG='false'
 
 while getopts 'cefhopu' flag; do
   case "${flag}" in
-    c) 
-      CACHE_FLAG='true' ;;
-    e) 
-      EXPERIMENTAL_FLAG='true' ;;
-    f) 
-      FORCE_FLAG='true' ;;
-    h)
-      HIDE_PODCASTS_FLAG='true' ;;
-    o)
-      OLD_UI_FLAG='true' ;;
-    p)
-      PREMIUM_FLAG='true' ;;
-    u)
-      UPDATE_FLAG='true' ;;
+    c) CACHE_FLAG='true' ;;
+    e) EXPERIMENTAL_FLAG='true' ;;
+    f) FORCE_FLAG='true' ;;
+    h) HIDE_PODCASTS_FLAG='true' ;;
+    o) OLD_UI_FLAG='true' ;;
+    p) PREMIUM_FLAG='true' ;;
+    u) UPDATE_FLAG='true' ;;
     *) 
       echo "Error: Flag not supported."
       exit ;;
@@ -64,7 +63,7 @@ PERL="perl -pi -w -e"
 AD_EMPTY_AD_BLOCK='s|adsEnabled:!0|adsEnabled:!1|'
 AD_PLAYLIST_SPONSORS='s|allSponsorships||'
 AD_UPGRADE_BUTTON='s/(return|.=.=>)"free"===(.+?)(return|.=.=>)"premium"===/$1"premium"===$2$3"free"===/g'
-AD_AUDIO_ADS='s|(case .:)return this.enabled=...+?(;case .:this.subscription=this.audioApi).+?(;case .)|$1$2.cosmosConnector.increaseStreamTime(-100000000000)$3|'
+AD_AUDIO_ADS='s/(case .:|async enable\(.\)\{)(this.enabled=.+?\(.{1,3},"audio"\),\|return this.enabled=...+?\(.{1,3},"audio"\))((;case 4:)?this.subscription=this.audioApi).+?this.onAdMessage\)/$1$3.cosmosConnector.increaseStreamTime(-100000000000)/'
 AD_BILLBOARD='s|.(\?\[....\.leaderboard,)|false$1|'
 AD_UPSELL='s|(Enables quicksilver in-app messaging modal",default:)(!0)|$1false|'
 
@@ -88,7 +87,7 @@ ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists wh
 ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
 # Home screen UI (new) | this will soon become obsolete
-NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
+NEW_UI='s|(Enable the new home structure and navigation\",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|..createElement\(.{1,4}),\{filterMatchQuery:.{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|xe\(.,.\).+?,)//'
@@ -97,7 +96,8 @@ HIDE_DL_MENU=' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA {display:none}'
 HIDE_VERY_HIGH=' #desktop\.settings\.streamingQuality>option:nth-child(5) {display:none}'
 
 # Hide Podcasts/Episodes/Audiobooks on home screen
-HIDE_PODCASTS='s/(\!Array.isArray\(.\)\|\|.===..length)/$1||e.children[0].key.includes('episode')||e.children[0].key.includes('show')/'
+HIDE_PODCASTS2='s/(!Array.isArray\(.\)\|\|.===..length)/$1||e.children[0].key.includes('\''episode'\'')||e.children[0].key.includes('\''show'\'')/'
+HIDE_PODCASTS3='s/(!Array.isArray\(.\)\|\|.===..length)/$1||e[0].key.includes('\''episode'\'')||e[0].key.includes('\''show'\'')/'
 
 # Log-related regex
 LOG_1='s|sp://logging/v3/\w+||g'
@@ -116,9 +116,12 @@ echo "SpotX-Mac by @SpotX-CLI"
 echo "************************"
 echo
 
+# Report detected version
+echo -e "Current Spotify version: ${CLIENT_VERSION}\n"
+
 # xpui detection
 if [[ ! -f "${XPUI_SPA}" ]]; then
-  echo - e "\nxpui not found!\nReinstall Spotify then try again.\nExiting...\n"
+  echo -e "\nxpui not found!\nReinstall Spotify then try again.\nExiting...\n"
   exit
 else
   if [[ "${FORCE_FLAG}" == "false" ]]; then
@@ -239,8 +242,12 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
 # Hide podcasts, episodes and audiobooks on home screen
 if [[ "${XPUI_SKIP}" == "false" ]]; then
   if [[ "${HIDE_PODCASTS_FLAG}" == "true" ]]; then
-    echo "Hiding non-music items on home screen..."
-    $PERL "${HIDE_PODCASTS}" "${HOME_V2_JS}"; fi; fi
+    if [[ $(ver "${CLIENT_VERSION}") -le $(ver "1.1.96.785") ]]; then
+      echo "Hiding non-music items on home screen..."
+      $PERL "${HIDE_PODCASTS2}" "${HOME_V2_JS}"
+    elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then
+      echo "Hiding non-music items on home screen..."
+      $PERL "${HIDE_PODCASTS3}" "${HOME_V2_JS}"; fi; fi; fi
 
 # Delete app cache
 if [[ "${CACHE_FLAG}" == "true" ]]; then

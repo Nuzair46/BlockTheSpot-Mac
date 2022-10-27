@@ -10,17 +10,17 @@
  ***     
 
 <center>
-    <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify macOS application.</h4>
+    <h4 align="center">A multi-featured adblocker and skip-bypass for the Spotify macOS application.</h4>
     <p align="center">
-        <strong>Last updated:</strong> 18 October 2022<br>
-        <strong>Last tested version:</strong> 1.1.96.785.g464c973a
+        <strong>Last updated:</strong> 27 October 2022<br>
+        <strong>Last tested version:</strong> 1.1.97.962
     </p> 
 </center>
 
 ### Features:
 
 - Blocks all banner/video/audio ads within the app
-- Retains friend, vertical video and radio functionality
+- Blocks logging (Sentry, etc)
 - Unlocks the skip function for any track
 - Blocks Spotify automatic updates (optional)
 - Enables [experimental features](https://github.com/SpotX-CLI/SpotX-Win/discussions/50) (optional)
@@ -67,7 +67,7 @@ or
 
 ### DISCLAIMER
 
-- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Mac or consequence of using those features will be the sole responsibility of the user and not either BlockTheSpot or SpotX, SpotX-Mac team will be responsible.
+- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Linux or consequence of using those features will be the sole responsibility of the user, not BlockTheSpot/SpotX/SpotX-CLI/SpotX-Mac.
 
 ### Credits
 
