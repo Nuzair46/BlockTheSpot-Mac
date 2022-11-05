@@ -77,12 +77,13 @@ ENABLE_ENHANCE_PLAYLIST='s|(Enable Enhance Playlist UI and functionality for end
 ENABLE_ENHANCE_SONGS='s|(Enable Enhance Liked Songs UI and functionality",default:)(!1)|$1true|s'
 ENABLE_EQUALIZER='s|(Enable audio equalizer for Desktop and Web Player",default:)(!1)|$1true|s'
 ENABLE_IGNORE_REC='s|(Enable Ignore In Recommendations for desktop and web",default:)(!1)|$1true|s'
+ENABLE_LEFT_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
 ENABLE_LIKED_SONGS='s|(Enable Liked Songs section on Artist page",default:)(!1)|$1true|s'
 ENABLE_LYRICS_CHECK='s|(With this enabled, clients will check whether tracks have lyrics available",default:)(!1)|$1true|s'
 ENABLE_LYRICS_MATCH='s|(Enable Lyrics match labels in search results",default:)(!1)|$1true|s'
-ENABLE_NEW_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
 ENABLE_PLAYLIST_CREATION_FLOW='s|(Enables new playlist creation flow in Web Player and DesktopX",default:)(!1)|$1true|s'
 ENABLE_PLAYLIST_PERMISSIONS_FLOWS='s|(Enable Playlist Permissions flows for Prod",default:)(!1)|$1true|s'
+ENABLE_RIGHT_SIDEBAR='s|(Enable the view on the right sidebar",default:)(!1)|$1true|s'
 ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists when trying to add songs to a playlist using the contextmenu",default:)(!1)|$1true|s'
 ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
@@ -96,6 +97,7 @@ HIDE_DL_MENU=' button.wC9sIed7pfp47wZbmU6m.pzkhLqffqF_4hucrVVQA {display:none}'
 HIDE_VERY_HIGH=' #desktop\.settings\.streamingQuality>option:nth-child(5) {display:none}'
 
 # Hide Podcasts/Episodes/Audiobooks on home screen
+HIDE_PODCASTS='s|withQueryParameters\(.\)\{return this.queryParameters=.,this}|withQueryParameters(e){return this.queryParameters=(e.types?{...e, types: e.types.split(",").filter(_ => !["episode","show"].includes(_)).join(",")}:e),this}|'
 HIDE_PODCASTS2='s/(!Array.isArray\(.\)\|\|.===..length)/$1||e.children[0].key.includes('\''episode'\'')||e.children[0].key.includes('\''show'\'')/'
 HIDE_PODCASTS3='s/(!Array.isArray\(.\)\|\|.===..length)/$1||e[0].key.includes('\''episode'\'')||e[0].key.includes('\''show'\'')/'
 
@@ -216,12 +218,13 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     $PERL "${ENABLE_ENHANCE_SONGS}" "${XPUI_JS}"
     $PERL "${ENABLE_EQUALIZER}" "${XPUI_JS}"
     $PERL "${ENABLE_IGNORE_REC}" "${XPUI_JS}"
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then $PERL "${ENABLE_LEFT_SIDEBAR}" "${XPUI_JS}"; fi
     $PERL "${ENABLE_LIKED_SONGS}" "${XPUI_JS}"
     $PERL "${ENABLE_LYRICS_CHECK}" "${XPUI_JS}"
     $PERL "${ENABLE_LYRICS_MATCH}" "${XPUI_JS}"
-    #$PERL "${ENABLE_NEW_SIDEBAR}" "${XPUI_JS}"
     $PERL "${ENABLE_PLAYLIST_CREATION_FLOW}" "${XPUI_JS}"
     $PERL "${ENABLE_PLAYLIST_PERMISSIONS_FLOWS}" "${XPUI_JS}"
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR}" "${XPUI_JS}"; fi
     $PERL "${ENABLE_SEARCH_BOX}" "${XPUI_JS}"
     $PERL "${ENABLE_SIMILAR_PLAYLIST}" "${XPUI_JS}"; fi; fi
 
@@ -242,12 +245,19 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
 # Hide podcasts, episodes and audiobooks on home screen
 if [[ "${XPUI_SKIP}" == "false" ]]; then
   if [[ "${HIDE_PODCASTS_FLAG}" == "true" ]]; then
-    if [[ $(ver "${CLIENT_VERSION}") -le $(ver "1.1.96.785") ]]; then
+    if [[ $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.93.896") ]]; then
+      echo "Hiding non-music items on home screen..."
+      $PERL "${HIDE_PODCASTS}" "${XPUI_JS}"
+    elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.93.896") && $(ver "${CLIENT_VERSION}") -le $(ver "1.1.96.785") ]]; then
       echo "Hiding non-music items on home screen..."
       $PERL "${HIDE_PODCASTS2}" "${HOME_V2_JS}"
-    elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then
+    elif [[ $(ver "${CLIENT_VERSION}") -gt $(ver "1.1.96.785") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.98.683") ]]; then
       echo "Hiding non-music items on home screen..."
-      $PERL "${HIDE_PODCASTS3}" "${HOME_V2_JS}"; fi; fi; fi
+      $PERL "${HIDE_PODCASTS3}" "${HOME_V2_JS}"
+    elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then
+      echo "Hiding non-music items on home screen..."
+      $PERL "${HIDE_PODCASTS3}" "${XPUI_JS}"; fi; fi; fi
+
 
 # Delete app cache
 if [[ "${CACHE_FLAG}" == "true" ]]; then
