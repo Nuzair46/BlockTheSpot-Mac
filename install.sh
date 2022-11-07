@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SPOTX_VERSION="1.1.98.683-2"
+
 # dependencies check
 command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2; exit 1; }
 command -v unzip >/dev/null || { echo -e "\nunzip was not found, exiting...\n" >&2; exit 1; }
@@ -87,8 +89,9 @@ ENABLE_RIGHT_SIDEBAR='s|(Enable the view on the right sidebar",default:)(!1)|$1t
 ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists when trying to add songs to a playlist using the contextmenu",default:)(!1)|$1true|s'
 ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
-# Home screen UI (new) | this will soon become obsolete
-NEW_UI='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
+# Home screen UI (new)
+NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
+NEW_UI2='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|..createElement\(.{1,4}),\{filterMatchQuery:.{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|xe\(.,.\).+?,)//'
@@ -118,8 +121,9 @@ echo "SpotX-Mac by @SpotX-CLI"
 echo "************************"
 echo
 
-# Report detected version
-echo -e "Current Spotify version: ${CLIENT_VERSION}\n"
+# Report versions
+echo -e "Spotify version: ${CLIENT_VERSION}\n"
+echo -e "SpotX-Mac version: ${SPOTX_VERSION}\n"
 
 # xpui detection
 if [[ ! -f "${XPUI_SPA}" ]]; then
@@ -166,27 +170,17 @@ echo "Applying SpotX patches..."
 if [[ "${XPUI_SKIP}" == "false" ]]; then
   if [[ "${PREMIUM_FLAG}" == "false" ]]; then
     # Remove Empty ad block
-    echo "Removing empty ad block..."
+    echo "Removing ad-related content..."
     $PERL "${AD_EMPTY_AD_BLOCK}" "${XPUI_JS}"
-    
     # Remove Playlist sponsors
-    echo "Removing playlist sponsors..."
     $PERL "${AD_PLAYLIST_SPONSORS}" "${XPUI_JS}"
-    
     # Remove Upgrade button
-    echo "Removing upgrade button..."
     $PERL "${AD_UPGRADE_BUTTON}" "${XPUI_JS}"
-    
     # Remove Audio ads
-    echo "Removing audio ads..."
     $PERL "${AD_AUDIO_ADS}" "${XPUI_JS}"
-    
     # Remove billboard ads
-    echo "Removing billboard ads..."
     $PERL "${AD_BILLBOARD}" "${XPUI_JS}"
-    
     # Remove premium upsells
-    echo "Removing premium upselling..."
     $PERL "${AD_UPSELL}" "${XPUI_JS}"
     
     # Remove Premium-only features
@@ -234,13 +228,18 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
   $PERL "${LOG_1}" "${XPUI_JS}"
   $PERL "${LOG_SENTRY}" "${VENDOR_XPUI_JS}"; fi
 
-# Handle UI view | this will soon become obsolete
+# Handle new home screen UI
 if [[ "${XPUI_SKIP}" == "false" ]]; then
   if [[ "${OLD_UI_FLAG}" == "true" ]]; then
     echo "Skipping new home UI patch..."
+  elif [[ $(ver "${CLIENT_VERSION}") -gt $(ver "1.1.93.896") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.97.956") ]]; then
+    echo "Enabling new home screen UI..."
+    $PERL "${NEW_UI}" "${XPUI_JS}"
+  elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.956") ]]; then
+    echo "Enabling new home screen UI..."
+    $PERL "${NEW_UI2}" "${XPUI_JS}"
   else
-    echo "Forcing new home UI..."
-    $PERL "${NEW_UI}" "${XPUI_JS}"; fi; fi
+    :; fi; fi
 
 # Hide podcasts, episodes and audiobooks on home screen
 if [[ "${XPUI_SKIP}" == "false" ]]; then
@@ -257,7 +256,6 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then
       echo "Hiding non-music items on home screen..."
       $PERL "${HIDE_PODCASTS3}" "${XPUI_JS}"; fi; fi; fi
-
 
 # Delete app cache
 if [[ "${CACHE_FLAG}" == "true" ]]; then
