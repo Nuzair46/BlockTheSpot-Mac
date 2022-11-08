@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SPOTX_VERSION="1.1.98.683-2"
+SPOTX_VERSION="1.1.98.683-3"
 
 # dependencies check
 command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2; exit 1; }
@@ -91,7 +91,7 @@ ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(
 
 # Home screen UI (new)
 NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
-NEW_UI2='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
+NEW_UI_2='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|..createElement\(.{1,4}),\{filterMatchQuery:.{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|xe\(.,.\).+?,)//'
@@ -108,11 +108,13 @@ HIDE_PODCASTS3='s/(!Array.isArray\(.\)\|\|.===..length)/$1||e[0].key.includes('\
 LOG_1='s|sp://logging/v3/\w+||g'
 LOG_SENTRY='s|this\.getStackTop\(\)\.client=e|return;$&|'
 
-# Spotify Connect unlock
-CONNECT_1='s| connect-device-list-item--disabled||'
-CONNECT_2='s|connect-picker.unavailable-to-control|spotify-connect|'
-CONNECT_3='s|(className:.,disabled:)(..)|$1false|'
-CONNECT_4='s/return (..isDisabled)(\?(..createElement|\(.{1,10}\))\(..,)/return false$2/'
+# Spotify Connect unlock / UI
+CONNECT_OLD_1='s| connect-device-list-item--disabled||' # 1.1.70.610+
+CONNECT_OLD_2='s|connect-picker.unavailable-to-control|spotify-connect|' # 1.1.70.610+
+CONNECT_OLD_3='s|(className:.,disabled:)(..)|$1false|' # 1.1.70.610+
+CONNECT_NEW='s/return (..isDisabled)(\?(..createElement|\(.{1,10}\))\(..,)/return false$2/' # 1.1.91.824+
+DEVICE_PICKER_NEW='s|(Enable showing a new and improved device picker UI",default:)(!1)|$1true|' # 1.1.90.855 - 1.1.95.893
+DEVICE_PICKER_OLD='s|(Enable showing a new and improved device picker UI",default:)(!0)|$1false|' # 1.1.96.783 - 1.1.97.962
 
 # Credits
 echo
@@ -122,7 +124,7 @@ echo "************************"
 echo
 
 # Report versions
-echo -e "Spotify version: ${CLIENT_VERSION}\n"
+echo -e "Spotify version: ${CLIENT_VERSION}"
 echo -e "SpotX-Mac version: ${SPOTX_VERSION}\n"
 
 # xpui detection
@@ -192,10 +194,15 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     
     # Unlock Spotify Connect
     echo "Unlocking Spotify Connect..."
-    $PERL "${CONNECT_1}" "${XPUI_JS}"
-    $PERL "${CONNECT_2}" "${XPUI_JS}"
-    $PERL "${CONNECT_3}" "${XPUI_JS}"
-    $PERL "${CONNECT_4}" "${XPUI_JS}"
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.70.610") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.91.824") ]]; then
+      $PERL "${CONNECT_OLD_1}" "${XPUI_JS}"
+      $PERL "${CONNECT_OLD_2}" "${XPUI_JS}"
+      $PERL "${CONNECT_OLD_3}" "${XPUI_JS}"
+    elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.91.824") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.96.783") ]]; then
+      $PERL "${DEVICE_PICKER_NEW}" "${XPUI_JS}"
+      $PERL "${CONNECT_NEW}" "${XPUI_JS}"
+    elif [[ $(ver "${CLIENT_VERSION}") -gt $(ver "1.1.96.783") ]]; then
+      $PERL "${CONNECT_NEW}" "${XPUI_JS}"; fi
   else
     echo "Premium subscription setup selected..."; fi; fi
 
@@ -237,7 +244,7 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     $PERL "${NEW_UI}" "${XPUI_JS}"
   elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.956") ]]; then
     echo "Enabling new home screen UI..."
-    $PERL "${NEW_UI2}" "${XPUI_JS}"
+    $PERL "${NEW_UI_2}" "${XPUI_JS}"
   else
     :; fi; fi
 
