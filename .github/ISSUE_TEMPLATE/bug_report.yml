@@ -11,8 +11,8 @@ body:
           required: true
         - label: I have checked older issues, open and closed
           required: true
-        - label: I did a clean install of Spotify and SpotX.
-          required: true  
+        - label: I did a clean install of Spotify and SpotX
+          required: true
 - type: markdown
   attributes:
     value: "###"    
@@ -59,7 +59,7 @@ body:
     description: |
       - Spotify: e.g. <kbd>Spotify for macOS (Apple Silicon) 1.1.98.683.g5a3b77ad</kbd>
         - With Spotify open and in focus, in the top toolbar, click <kbd>Spotify</kbd> → <kbd>About Spotify</kbd> → <kbd>About Spotify</kbd>
-        - Click on the `Copy version info button` to copy the Spotify version info to your clipboard.
+        - Click on the `Copy version info` button to copy the Spotify version info to your clipboard.
       - macOS: e.g. <kbd>macOS Ventura 13.0</kbd> 
         - Click Apple menu (top left of screen) then select <kbd>About This Mac</kbd> to open the system information window to view macOS info.
       - Shell: e.g. <kbd>bash</kbd>
