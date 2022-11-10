@@ -12,7 +12,7 @@
 <center>
     <h4 align="center">A multi-featured adblocker for the Spotify macOS application.</h4>
     <p align="center">
-        <strong>Last updated:</strong> 07 November 2022<br>
+        <strong>Last updated:</strong> 10 November 2022<br>
         <strong>Last tested version:</strong> 1.1.98.683
     </p> 
 </center>
@@ -38,6 +38,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 #### Optional Install Arguments:
 `-c`  Clear app cache -- use if UI-related patches aren't working  
 `-e`  Experimental features -- enables experimental features  
+`-E`  Exclude feature -- disables specified feature(s) [currently only supports `leftsidebar`]
 `-f`  Force patch -- forces re-patching if backup detected  
 `-h`  Hide podcasts, episodes and audiobooks on home screen  
 `-o`  Old UI -- skips forced 'new UI' patch  

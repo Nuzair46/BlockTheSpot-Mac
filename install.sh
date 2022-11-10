@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SPOTX_VERSION="1.1.98.683-3"
+SPOTX_VERSION="1.1.98.683-4"
 
 # dependencies check
 command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2; exit 1; }
@@ -36,6 +36,7 @@ function ver { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }
 
 # Script flags
 CACHE_FLAG='false'
+EXCLUDE_FLAG=''
 EXPERIMENTAL_FLAG='false'
 FORCE_FLAG='false'
 HIDE_PODCASTS_FLAG='false'
@@ -43,9 +44,10 @@ OLD_UI_FLAG='false'
 PREMIUM_FLAG='false'
 UPDATE_FLAG='false'
 
-while getopts 'cefhopu' flag; do
+while getopts 'cE:efhopu' flag; do
   case "${flag}" in
     c) CACHE_FLAG='true' ;;
+    E) EXCLUDE_FLAG+=("${OPTARG}") ;;
     e) EXPERIMENTAL_FLAG='true' ;;
     f) FORCE_FLAG='true' ;;
     h) HIDE_PODCASTS_FLAG='true' ;;
@@ -56,6 +58,11 @@ while getopts 'cefhopu' flag; do
       echo "Error: Flag not supported."
       exit ;;
   esac
+done
+
+# Handle multiple "exclude" flags if desired
+for EXCLUDE_VAL in "${EXCLUDE_FLAG[@]}"; do
+    if [[ "${EXCLUDE_VAL}" == "leftsidebar" ]]; then EX_LEFTSIDEBAR='true'; fi
 done
 
 # Perl command
@@ -219,7 +226,7 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     $PERL "${ENABLE_ENHANCE_SONGS}" "${XPUI_JS}"
     $PERL "${ENABLE_EQUALIZER}" "${XPUI_JS}"
     $PERL "${ENABLE_IGNORE_REC}" "${XPUI_JS}"
-    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then $PERL "${ENABLE_LEFT_SIDEBAR}" "${XPUI_JS}"; fi
+    if [[ "${EX_LEFTSIDEBAR}" != "true" ]]; then if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then $PERL "${ENABLE_LEFT_SIDEBAR}" "${XPUI_JS}"; fi; fi
     $PERL "${ENABLE_LIKED_SONGS}" "${XPUI_JS}"
     $PERL "${ENABLE_LYRICS_CHECK}" "${XPUI_JS}"
     $PERL "${ENABLE_LYRICS_MATCH}" "${XPUI_JS}"
