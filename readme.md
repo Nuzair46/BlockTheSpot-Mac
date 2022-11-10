@@ -46,10 +46,10 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 `-u`  Update block -- blocks automatic updates  
 
 Use any combination of flags.  
-The following example clears app cache, adds experimental features and blocks updates:
+The following example clears app cache, adds experimental features, excludes leftsidebar and blocks updates:
     
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -ceu
+bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -ceu -E leftsidebar
 ```
 
 

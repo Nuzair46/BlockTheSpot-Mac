@@ -62,7 +62,7 @@ done
 
 # Handle multiple "exclude" flags if desired
 for EXCLUDE_VAL in "${EXCLUDE_FLAG[@]}"; do
-    if [[ "${EXCLUDE_VAL}" == "leftsidebar" ]]; then EX_LEFTSIDEBAR='true'; fi
+  if [[ "${EXCLUDE_VAL}" == "leftsidebar" ]]; then EX_LEFTSIDEBAR='true'; fi
 done
 
 # Perl command
