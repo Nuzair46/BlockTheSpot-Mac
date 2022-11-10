@@ -38,7 +38,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 #### Optional Install Arguments:
 `-c`  Clear app cache -- use if UI-related patches aren't working  
 `-e`  Experimental features -- enables experimental features  
-`-E`  Exclude feature -- disables specified feature(s) [currently only supports `leftsidebar`]
+`-E`  Exclude feature -- disables specified feature(s) [currently only supports `leftsidebar`]  
 `-f`  Force patch -- forces re-patching if backup detected  
 `-h`  Hide podcasts, episodes and audiobooks on home screen  
 `-o`  Old UI -- skips forced 'new UI' patch  
