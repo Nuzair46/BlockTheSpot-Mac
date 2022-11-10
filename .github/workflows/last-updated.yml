@@ -1,0 +1,26 @@
+# This workflow automatically update 'Last updated' in readme.md when installer files are modified
+
+name: Update 'Last updated' in readme.md
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [install.sh, uninstall.sh]
+
+jobs:
+  update-last-updated:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: update 'Last updated' in readme.md
+        run: sed -i "/<strong>Last updated:<\/strong> /s|> .*<br>|> $(date +"%d %B %Y")<br>|" readme.md
+
+      - name: Commit and Push readme.md
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add readme.md
+          git commit -m "[github-actions] updated readme.md"
+          git push

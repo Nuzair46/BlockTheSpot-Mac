@@ -10,17 +10,17 @@
  ***     
 
 <center>
-    <h4 align="center">A multi-purpose adblocker and skip-bypass for the Spotify macOS application.</h4>
+    <h4 align="center">A multi-featured adblocker for the Spotify macOS application.</h4>
     <p align="center">
-        <strong>Last updated:</strong> 18 October 2022<br>
-        <strong>Last tested version:</strong> 1.1.96.785.g464c973a
+        <strong>Last updated:</strong> 10 November 2022<br>
+        <strong>Last tested version:</strong> 1.1.98.683
     </p> 
 </center>
 
 ### Features:
 
 - Blocks all banner/video/audio ads within the app
-- Retains friend, vertical video and radio functionality
+- Blocks logging (Sentry, etc)
 - Unlocks the skip function for any track
 - Blocks Spotify automatic updates (optional)
 - Enables [experimental features](https://github.com/SpotX-CLI/SpotX-Win/discussions/50) (optional)
@@ -38,6 +38,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 #### Optional Install Arguments:
 `-c`  Clear app cache -- use if UI-related patches aren't working  
 `-e`  Experimental features -- enables experimental features  
+`-E`  Exclude feature -- disables specified feature(s) [currently only supports `leftsidebar`]  
 `-f`  Force patch -- forces re-patching if backup detected  
 `-h`  Hide podcasts, episodes and audiobooks on home screen  
 `-o`  Old UI -- skips forced 'new UI' patch  
@@ -45,10 +46,10 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 `-u`  Update block -- blocks automatic updates  
 
 Use any combination of flags.  
-The following example clears app cache, adds experimental features and blocks updates:
+The following example clears app cache, adds experimental features, excludes leftsidebar and blocks updates:
     
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -ceu
+bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -ceu -E leftsidebar
 ```
 
 
@@ -67,7 +68,7 @@ or
 
 ### DISCLAIMER
 
-- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Mac or consequence of using those features will be the sole responsibility of the user and not either BlockTheSpot or SpotX, SpotX-Mac team will be responsible.
+- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Mac or consequence of using those features will be the sole responsibility of the user, not BlockTheSpot/SpotX/SpotX-CLI/SpotX-Mac.
 
 ### Credits
 
