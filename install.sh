@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SPOTX_VERSION="1.1.98.683-4"
+SPOTX_VERSION="1.1.98.691-1"
 
 # dependencies check
 command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2; exit 1; }
@@ -99,6 +99,7 @@ ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(
 # Home screen UI (new)
 NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
 NEW_UI_2='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
+AUDIOBOOKS_CLIENTX='s|(Enable Audiobooks feature on ClientX",default:)(!1)|$1true|s'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|..createElement\(.{1,4}),\{filterMatchQuery:.{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|xe\(.,.\).+?,)//'
@@ -249,9 +250,11 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
   elif [[ $(ver "${CLIENT_VERSION}") -gt $(ver "1.1.93.896") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.97.956") ]]; then
     echo "Enabling new home screen UI..."
     $PERL "${NEW_UI}" "${XPUI_JS}"
+    $PERL "${AUDIOBOOKS_CLIENTX}" "${XPUI_JS}"
   elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.956") ]]; then
     echo "Enabling new home screen UI..."
     $PERL "${NEW_UI_2}" "${XPUI_JS}"
+    $PERL "${AUDIOBOOKS_CLIENTX}" "${XPUI_JS}"
   else
     :; fi; fi
 
