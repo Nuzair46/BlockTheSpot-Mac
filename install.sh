@@ -235,7 +235,7 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.70.610") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.94.864") ]]; then $PERL "${ENABLE_LYRICS_CHECK}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.87.612") ]]; then $PERL "${ENABLE_LYRICS_MATCH}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.70.610") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.96.783") ]]; then $PERL "${ENABLE_MADE_FOR_YOU}" "${XPUI_JS}"; fi
-    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.90.855") ]]; then $PERL "${ENABLE_PATHFINDER_DATA}" "${XPUI_JS}"; fi
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.91.824") ]]; then $PERL "${ENABLE_PATHFINDER_DATA}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.70.610") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.94.864") ]]; then $PERL "${ENABLE_PLAYLIST_CREATION_FLOW}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.75.572") ]]; then $PERL "${ENABLE_PLAYLIST_PERMISSIONS_FLOWS}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR}" "${XPUI_JS}"; fi
