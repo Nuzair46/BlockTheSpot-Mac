@@ -12,7 +12,7 @@
 <center>
     <h4 align="center">A multi-featured adblocker for the Spotify macOS application.</h4>
     <p align="center">
-        <strong>Last updated:</strong> 01 December 2022<br>
+        <strong>Last updated:</strong> 06 December 2022<br>
         <strong>Last tested version:</strong> 1.2.0.1165
     </p> 
 </center>
