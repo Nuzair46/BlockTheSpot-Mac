@@ -12,8 +12,8 @@
 <center>
     <h4 align="center">A multi-featured adblocker for the Spotify macOS application.</h4>
     <p align="center">
-        <strong>Last updated:</strong> 06 December 2022<br>
-        <strong>Last tested version:</strong> 1.2.0.1165
+        <strong>Last updated:</strong> 27 December 2022<br>
+        <strong>Last tested version:</strong> 1.2.1.968
     </p> 
 </center>
 
@@ -65,6 +65,10 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/unin
 or
 
 - Reinstall Spotify
+
+### Notes:
+
+- Spicetify users: When using SpotX-Mac + Spicetify, the current script requires running SpotX first.
 
 ### DISCLAIMER
 
