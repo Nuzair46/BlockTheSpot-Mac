@@ -42,7 +42,8 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 `-f`  Force patch -- forces re-patching if backup detected  
 `-h`  Hide podcasts, episodes and audiobooks on home screen  
 `-o`  Old UI -- skips forced 'new UI' patch  
-`-p`  Premium subscription setup -- use if premium subscriber  
+`-p`  Premium subscription setup -- use if premium subscriber
+`-P`  Path to Spotify.app -- set custom Spotify app path
 `-u`  Update block -- blocks automatic updates  
 
 Use any combination of flags.  

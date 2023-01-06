@@ -88,8 +88,8 @@ body:
     required: true
 - type: textarea
   attributes:
-    label: 🖵 Terminal Output
-    description: Copy output from Terminal -- the SpotX command you entered and everything that followed.
+    label: 🖥️ Terminal Input/Output
+    description: Copy input/output from Terminal -- the SpotX command you entered and everything that followed.
   validations:
     required: true
 - type: textarea

@@ -7,15 +7,58 @@ command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2
 command -v unzip >/dev/null || { echo -e "\nunzip was not found, exiting...\n" >&2; exit 1; }
 command -v zip >/dev/null || { echo -e "\nzip was not found, exiting...\n" >&2; exit 1; }
 
-# Inital paths and filenames
+# Script flags
 APP_PATH="/Applications/Spotify.app"
-if [[ -d "${HOME}${APP_PATH}" ]]; then
-  INSTALL_PATH="${HOME}${APP_PATH}"
-elif [[ -d "${APP_PATH}" ]]; then
-  INSTALL_PATH="${APP_PATH}"
+CACHE_FLAG='false'
+EXCLUDE_FLAG=''
+EXPERIMENTAL_FLAG='false'
+FORCE_FLAG='false'
+HIDE_PODCASTS_FLAG='false'
+OLD_UI_FLAG='false'
+PATH_FLAG='false'
+PREMIUM_FLAG='false'
+UPDATE_FLAG='false'
+CUSTOM_APP_PATH='false'
+
+while getopts 'cE:efhopuP:' flag; do
+  case "${flag}" in
+  c) CACHE_FLAG='true' ;;
+  E) EXCLUDE_FLAG+=("${OPTARG}") ;;
+  e) EXPERIMENTAL_FLAG='true' ;;
+  f) FORCE_FLAG='true' ;;
+  h) HIDE_PODCASTS_FLAG='true' ;;
+  o) OLD_UI_FLAG='true' ;;
+  p) PREMIUM_FLAG='true' ;;
+  P)
+    APP_PATH="${OPTARG}"
+    PATH_FLAG='true'
+    ;;
+  u) UPDATE_FLAG='true' ;;
+  *)
+    echo "Error: Flag not supported."
+    exit
+    ;;
+  esac
+done
+
+# Inital paths and filenames
+if [[ "${PATH_FLAG}" == 'false' ]]; then
+  if [[ -d "${HOME}${APP_PATH}" ]]; then
+    INSTALL_PATH="${HOME}${APP_PATH}"
+  elif [[ -d "${APP_PATH}" ]]; then
+    INSTALL_PATH="${APP_PATH}"
+  else
+    echo -e "\nSpotify not found. Exiting...\n"
+    exit
+  fi
 else
-  echo -e "\nSpotify not found. Exiting...\n"
-  exit; fi
+  if [[ -d "${APP_PATH}" ]]; then
+    INSTALL_PATH="${APP_PATH}"
+  else
+    echo -e "\nSpotify not found. Exiting...\n"
+    exit
+  fi
+fi
 
 CACHE_PATH="${HOME}/Library/Caches/com.spotify.client"
 UPDATE_PATH="${HOME}/Library/Application Support/Spotify/PersistentCache/Update"
@@ -33,32 +76,6 @@ CLIENT_VERSION=$(awk '/CFBundleShortVersionString/{getline; print}' "${INSTALL_P
 
 # Version function for version comparison
 function ver { echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'; }
-
-# Script flags
-CACHE_FLAG='false'
-EXCLUDE_FLAG=''
-EXPERIMENTAL_FLAG='false'
-FORCE_FLAG='false'
-HIDE_PODCASTS_FLAG='false'
-OLD_UI_FLAG='false'
-PREMIUM_FLAG='false'
-UPDATE_FLAG='false'
-
-while getopts 'cE:efhopu' flag; do
-  case "${flag}" in
-    c) CACHE_FLAG='true' ;;
-    E) EXCLUDE_FLAG+=("${OPTARG}") ;;
-    e) EXPERIMENTAL_FLAG='true' ;;
-    f) FORCE_FLAG='true' ;;
-    h) HIDE_PODCASTS_FLAG='true' ;;
-    o) OLD_UI_FLAG='true' ;;
-    p) PREMIUM_FLAG='true' ;;
-    u) UPDATE_FLAG='true' ;;
-    *) 
-      echo "Error: Flag not supported."
-      exit ;;
-  esac
-done
 
 # Handle multiple "exclude" flags if desired
 for EXCLUDE_VAL in "${EXCLUDE_FLAG[@]}"; do
