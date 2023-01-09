@@ -69,6 +69,7 @@ or
 
 ### Notes:
 
+- Audio/video ads during Podcast playback are currently NOT blocked with SpotX.
 - Spicetify users: When using SpotX-Mac + Spicetify, the current script requires running SpotX first.
 
 ### DISCLAIMER
