@@ -108,7 +108,6 @@ ENABLE_EQUALIZER='s|(Enable audio equalizer for Desktop and Web Player",default:
 ENABLE_FOLLOWERS_ON_PROFILE='s|(Enable a setting to control if followers and following lists are shown on profile",default:)(!1)|$1true|s'
 ENABLE_FORGET_DEVICES='s|(Enable the option to Forget Devices",default:)(!1)|$1true|s'
 ENABLE_IGNORE_REC='s|(Enable Ignore In Recommendations for desktop and web",default:)(!1)|$1true|s'
-ENABLE_LEFT_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
 ENABLE_LIKED_SONGS='s|(Enable Liked Songs section on Artist page",default:)(!1)|$1true|s'
 ENABLE_LYRICS_CHECK='s|(With this enabled, clients will check whether tracks have lyrics available",default:)(!1)|$1true|s'
 ENABLE_LYRICS_MATCH='s|(Enable Lyrics match labels in search results",default:)(!1)|$1true|s'
@@ -117,8 +116,6 @@ ENABLE_PLAYLIST_CREATION_FLOW='s|(Enables new playlist creation flow in Web Play
 ENABLE_PLAYLIST_PERMISSIONS_FLOWS='s|(Enable Playlist Permissions flows for Prod",default:)(!1)|$1true|s'
 ENABLE_PODCAST_PLAYBACK_SPEED='s|(playback speed range from 0.5-3.5 with every 0.1 increment",default:)(!1)|$1true|s'
 ENABLE_PODCAST_TRIMMING='s|(Enable silence trimming in podcasts",default:)(!1)|$1true|s'
-ENABLE_RIGHT_SIDEBAR='s|(Enable the view on the right sidebar",default:)(!1)|$1true|s'
-ENABLE_RIGHT_SIDEBAR_LYRICS='s|(Show lyrics in the right sidebar",default:)(!1)|$1true|s'
 ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists when trying to add songs to a playlist using the contextmenu",default:)(!1)|$1true|s'
 ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
@@ -126,6 +123,9 @@ ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(
 NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
 NEW_UI_2='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
 AUDIOBOOKS_CLIENTX='s|(Enable Audiobooks feature on ClientX",default:)(!1)|$1true|s'
+ENABLE_LEFT_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
+ENABLE_RIGHT_SIDEBAR='s|(Enable the view on the right sidebar",default:)(!1)|$1true|s'
+ENABLE_RIGHT_SIDEBAR_LYRICS='s|(Show lyrics in the right sidebar",default:)(!1)|$1true|s'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|(.\(\).|..)createElement\(.{1,4}),\{(filterMatchQuery|filter:.,title|(variant:"viola",semanticColor:"textSubdued"|..:"span",variant:.{3,6}mesto,color:.{3,6}),htmlFor:"desktop.settings.downloadQuality.+?).{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|\(.,.\){3,4},|,.\)}},.\(.,.\)\),)//'
