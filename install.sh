@@ -20,11 +20,11 @@ PREMIUM_FLAG='false'
 UPDATE_FLAG='false'
 CUSTOM_APP_PATH='false'
 
-while getopts 'cE:efhopuP:' flag; do
+while getopts 'cefhopuP:' flag; do
   case "${flag}" in
   c) CACHE_FLAG='true' ;;
   E) EXCLUDE_FLAG+=("${OPTARG}") ;;
-  e) EXPERIMENTAL_FLAG='true' ;;
+  e) EXPERIMENTAL_FLAG='true' ;; #currently disabled
   f) FORCE_FLAG='true' ;;
   h) HIDE_PODCASTS_FLAG='true' ;;
   o) OLD_UI_FLAG='true' ;;
