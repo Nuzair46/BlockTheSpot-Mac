@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SPOTX_VERSION="1.2.1.968-1"
+SPOTX_VERSION="1.2.3.1115-1"
 
 # dependencies check
 command -v perl >/dev/null || { echo -e "\nperl was not found, exiting...\n" >&2; exit 1; }
@@ -20,11 +20,11 @@ PREMIUM_FLAG='false'
 UPDATE_FLAG='false'
 CUSTOM_APP_PATH='false'
 
-while getopts 'cE:efhopuP:' flag; do
+while getopts 'cefhopuP:' flag; do
   case "${flag}" in
   c) CACHE_FLAG='true' ;;
   E) EXCLUDE_FLAG+=("${OPTARG}") ;;
-  e) EXPERIMENTAL_FLAG='true' ;;
+  e) EXPERIMENTAL_FLAG='true' ;; #currently disabled
   f) FORCE_FLAG='true' ;;
   h) HIDE_PODCASTS_FLAG='true' ;;
   o) OLD_UI_FLAG='true' ;;
@@ -108,17 +108,14 @@ ENABLE_EQUALIZER='s|(Enable audio equalizer for Desktop and Web Player",default:
 ENABLE_FOLLOWERS_ON_PROFILE='s|(Enable a setting to control if followers and following lists are shown on profile",default:)(!1)|$1true|s'
 ENABLE_FORGET_DEVICES='s|(Enable the option to Forget Devices",default:)(!1)|$1true|s'
 ENABLE_IGNORE_REC='s|(Enable Ignore In Recommendations for desktop and web",default:)(!1)|$1true|s'
-ENABLE_LEFT_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
 ENABLE_LIKED_SONGS='s|(Enable Liked Songs section on Artist page",default:)(!1)|$1true|s'
 ENABLE_LYRICS_CHECK='s|(With this enabled, clients will check whether tracks have lyrics available",default:)(!1)|$1true|s'
 ENABLE_LYRICS_MATCH='s|(Enable Lyrics match labels in search results",default:)(!1)|$1true|s'
 ENABLE_PATHFINDER_DATA='s|(Fetch Browse data from Pathfinder",default:)(!1)|$1true|s'
 ENABLE_PLAYLIST_CREATION_FLOW='s|(Enables new playlist creation flow in Web Player and DesktopX",default:)(!1)|$1true|s'
 ENABLE_PLAYLIST_PERMISSIONS_FLOWS='s|(Enable Playlist Permissions flows for Prod",default:)(!1)|$1true|s'
-ENABLE_PODCAST_PLAYBACK_SPEED='s|playback speed range from 0.5-3.5 with every 0.1 increment",default:)(!1)|$1true|s'
+ENABLE_PODCAST_PLAYBACK_SPEED='s|(playback speed range from 0.5-3.5 with every 0.1 increment",default:)(!1)|$1true|s'
 ENABLE_PODCAST_TRIMMING='s|(Enable silence trimming in podcasts",default:)(!1)|$1true|s'
-ENABLE_RIGHT_SIDEBAR='s|(Enable the view on the right sidebar",default:)(!1)|$1true|s'
-ENABLE_RIGHT_SIDEBAR_LYRICS='s|(Show lyrics in the right sidebar",default:)(!1)|$1true|s'
 ENABLE_SEARCH_BOX='s|(Adds a search box so users are able to filter playlists when trying to add songs to a playlist using the contextmenu",default:)(!1)|$1true|s'
 ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(.{1,3}Fragment,.+?{(uri:.|spec:.),(uri:.|spec:.).+?contextmenu.create-similar-playlist"\)}\),)/,$2$1/s'
 
@@ -126,6 +123,9 @@ ENABLE_SIMILAR_PLAYLIST='s/,(.\.isOwnedBySelf&&)((\(.{0,11}\)|..createElement)\(
 NEW_UI='s|(Enable the new home structure and navigation",values:.,default:)(..DISABLED)|$1true|'
 NEW_UI_2='s|(Enable the new home structure and navigation",values:.,default:.)(.DISABLED)|$1.ENABLED_CENTER|'
 AUDIOBOOKS_CLIENTX='s|(Enable Audiobooks feature on ClientX",default:)(!1)|$1true|s'
+ENABLE_LEFT_SIDEBAR='s|(Enable Your Library X view of the left sidebar",default:)(!1)|$1true|s'
+ENABLE_RIGHT_SIDEBAR='s|(Enable the view on the right sidebar",default:)(!1)|$1true|s'
+ENABLE_RIGHT_SIDEBAR_LYRICS='s|(Show lyrics in the right sidebar",default:)(!1)|$1true|s'
 
 # Hide Premium-only features
 HIDE_DL_QUALITY='s/(\(.,..jsxs\)\(.{1,3}|(.\(\).|..)createElement\(.{1,4}),\{(filterMatchQuery|filter:.,title|(variant:"viola",semanticColor:"textSubdued"|..:"span",variant:.{3,6}mesto,color:.{3,6}),htmlFor:"desktop.settings.downloadQuality.+?).{1,6}get\("desktop.settings.downloadQuality.title.+?(children:.{1,2}\(.,.\).+?,|\(.,.\){3,4},|,.\)}},.\(.,.\)\),)//'
@@ -258,7 +258,6 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.1.958") ]]; then $PERL "${ENABLE_FOLLOWERS_ON_PROFILE}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.0.1155") ]]; then $PERL "${ENABLE_FORGET_DEVICES}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.87.612") ]]; then $PERL "${ENABLE_IGNORE_REC}" "${XPUI_JS}"; fi
-    if [[ "${EX_LEFTSIDEBAR}" != "true" ]]; then if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then $PERL "${ENABLE_LEFT_SIDEBAR}" "${XPUI_JS}"; fi; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.70.610") ]]; then $PERL "${ENABLE_LIKED_SONGS}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.70.610") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.94.864") ]]; then $PERL "${ENABLE_LYRICS_CHECK}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.87.612") ]]; then $PERL "${ENABLE_LYRICS_MATCH}" "${XPUI_JS}"; fi
@@ -268,8 +267,6 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.75.572") ]]; then $PERL "${ENABLE_PLAYLIST_PERMISSIONS_FLOWS}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.0.1165") ]]; then $PERL "${ENABLE_PODCAST_PLAYBACK_SPEED}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.99.871") ]]; then $PERL "${ENABLE_PODCAST_TRIMMING}" "${XPUI_JS}"; fi
-    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR}" "${XPUI_JS}"; fi
-    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.0.1165") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR_LYRICS}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.86.857") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.1.94.864") ]]; then $PERL "${ENABLE_SEARCH_BOX}" "${XPUI_JS}"; fi
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.85.884") ]]; then $PERL "${ENABLE_SIMILAR_PLAYLIST}" "${XPUI_JS}"; fi; fi; fi
 
@@ -287,10 +284,18 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     echo "Enabling new home screen UI..."
     $PERL "${NEW_UI}" "${XPUI_JS}"
     $PERL "${AUDIOBOOKS_CLIENTX}" "${XPUI_JS}"
-  elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.956") ]]; then
+  elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.956") && $(ver "${CLIENT_VERSION}") -lt $(ver "1.2.3.1107") ]]; then
     echo "Enabling new home screen UI..."
     $PERL "${NEW_UI_2}" "${XPUI_JS}"
     $PERL "${AUDIOBOOKS_CLIENTX}" "${XPUI_JS}"
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR}" "${XPUI_JS}"; fi
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.0.1165") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR_LYRICS}" "${XPUI_JS}"; fi
+  elif [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.3.1107") ]]; then
+    echo "Enabling new home screen UI..."
+    $PERL "${AUDIOBOOKS_CLIENTX}" "${XPUI_JS}"
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.97.962") ]]; then $PERL "${ENABLE_LEFT_SIDEBAR}" "${XPUI_JS}"; fi
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR}" "${XPUI_JS}"; fi
+    if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.2.0.1165") ]]; then $PERL "${ENABLE_RIGHT_SIDEBAR_LYRICS}" "${XPUI_JS}"; fi
   else
     :; fi; fi
 
