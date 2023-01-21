@@ -1,9 +1,9 @@
   <p align="center">
-  <a href="https://github.com/SpotX-CLI/SpotX-Mac"><img src="https://github.com/SpotX-CLI/SpotX-Mac/raw/main/.github/Pic/logo.png" />
+  <a href="https://github.com/SpotX-CLI/SpotX-Mac"><img src="https://raw.githubusercontent.com/SpotX-CLI/SpotX-commons/main/.github/Pic/Logo/logo-mac.png" />
 </p>
 
 <p align="center">        
-      <a href="https://t.me/spotify_windows_mod"><img src="https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/.github/Pic/Shields/tg.svg"></a>
+      <a href="https://t.me/spotify_windows_mod"><img src="https://raw.githubusercontent.com/SpotX-CLI/SpotX-commons/main/.github/Pic/Shields/tg.svg"></a>
       <a href="https://discord.gg/p43cusgUPm"><img src="https://discord.com/api/guilds/807273906872123412/widget.png"></a>
       </p>
 
