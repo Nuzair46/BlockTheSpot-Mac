@@ -78,4 +78,4 @@ or
 ### Credits
 
 - Thanks to [SpotX - amd64fox](https://github.com/amd64fox/spotx).
-- Thanks to @jetfir3 for the extended contribution
+- Thanks to [@jetfir3](https://github.com/jetfir3) for the extended contribution
