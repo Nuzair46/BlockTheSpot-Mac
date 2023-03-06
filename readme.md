@@ -16,6 +16,9 @@
     </p> 
 </center>
 
+## We need collaborators.
+- We are running short of people who can collaborate and maintain this project. If you are good with bash scripting, please create an issue here or contact Red.#1111 in discord.
+
 ### Features:
 
 - Blocks all banner/video/audio ads within the app
