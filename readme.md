@@ -62,7 +62,7 @@ Use any combination of flags.
 The following example clears app cache, adds experimental features, leaves new UI enabled and blocks updates:
 
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -ceu
+bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -hu
 ```
 
 ### Uninstall:
