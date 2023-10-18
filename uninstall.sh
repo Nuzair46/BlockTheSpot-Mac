@@ -16,6 +16,13 @@ while getopts 'P:' flag; do
   esac
 done
 
+# Credits
+echo
+echo "************************"
+echo "SpotX-Mac by @Nuzair46"
+echo "************************"
+echo
+
 # Inital paths and filenames
 if [[ "${PATH_FLAG}" == 'false' ]]; then
   if [[ -d "${HOME}${APP_PATH}" ]]; then
@@ -37,9 +44,11 @@ fi
 XPUI_PATH="${INSTALL_PATH}/Contents/Resources/Apps"
 XPUI_SPA="${XPUI_PATH}/xpui.spa"
 XPUI_BAK="${XPUI_PATH}/xpui.bak"
+APP_BINARY="${INSTALL_PATH}/Contents/MacOS/Spotify"
+APP_BINARY_BAK="${INSTALL_PATH}/Contents/MacOS/Spotify.bak"
 
 # Check for backup file
-if [[ ! -f "${XPUI_BAK}" ]]; then
+if [[ ! -f "${XPUI_BAK}" ]] || [[ ! -f "${APP_BINARY_BAK}" ]]; then
   echo -e "Backup file not found.\nExiting...\n"
   exit 
 fi
@@ -47,6 +56,8 @@ fi
 # Uninstall patch
 echo "Removing patch..."
 rm "${XPUI_SPA}"
+rm "${APP_BINARY}"
 mv "${XPUI_BAK}" "${XPUI_SPA}"
+mv "${APP_BINARY_BAK}" "${APP_BINARY}"
 
 echo -e "Patch removed successfully!\n"
