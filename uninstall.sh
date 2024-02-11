@@ -19,7 +19,7 @@ done
 # Credits
 echo
 echo "************************"
-echo "SpotX-Mac by @Nuzair46"
+echo "BlockTheSpot-Mac by @Nuzair46"
 echo "************************"
 echo
 

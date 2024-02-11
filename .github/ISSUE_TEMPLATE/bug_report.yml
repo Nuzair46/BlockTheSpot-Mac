@@ -5,13 +5,13 @@ body:
 - type: checkboxes
   attributes:
       label: 🧐 Have you fully read the README and viewed similar issues?
-      description: Please read the <a href="https://github.com/SpotX-CLI/SpotX-Mac/blob/main/readme.md">README</a>. Also check the open and closed <a href="https://github.com/SpotX-CLI/SpotX-Mac/issues">issue</a> because your issue may have already been fixed.
+      description: Please read the <a href="https://github.com/Nuzair46/BlockTheSpot-Mac/blob/main/readme.md">README</a>. Also check the open and closed <a href="https://github.com/Nuzair46/BlockTheSpot-Mac/issues">issue</a> because your issue may have already been fixed.
       options:
         - label: I have read the README
           required: true
         - label: I have checked older issues, open and closed
           required: true
-        - label: I did a clean install of Spotify and SpotX
+        - label: I did a clean install of Spotify and BlockTheSpot
           required: true
 - type: markdown
   attributes:
@@ -89,7 +89,7 @@ body:
 - type: textarea
   attributes:
     label: 🖥️ Terminal Input/Output
-    description: Copy input/output from Terminal -- the SpotX command you entered and everything that followed.
+    description: Copy input/output from Terminal -- the BlockTheSpot command you entered and everything that followed.
   validations:
     required: true
 - type: textarea

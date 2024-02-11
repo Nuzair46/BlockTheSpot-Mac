@@ -1,20 +1,18 @@
-  <p align="center">
-  <a href="https://github.com/SpotX-CLI/SpotX-Mac"><img src="https://raw.githubusercontent.com/SpotX-CLI/SpotX-commons/main/.github/Pic/Logo/logo-mac.png" />
+<p align="center">        
+  <a href="https://discord.gg/eYudMwgYtY"><img src="https://discord.com/api/guilds/807273906872123412/widget.png"></a>
 </p>
 
-<p align="center">        
-      <a href="https://discord.gg/eYudMwgYtY"><img src="https://discord.com/api/guilds/807273906872123412/widget.png"></a>
-      </p>
-
----
-
 <center>
-    <h4 align="center">A multi-featured adblocker for the Spotify macOS application.</h4>
+    <h1 align="center">BlockTheSpot-Mac</h1>
+    <h4 align="center">A multi-purpose adblocker and skip-bypass for the <strong>Spotify for MacOS</strong> </h4>
+    <h5 align="center">Please support Spotify by purchasing premium</h5>
     <p align="center">
-        <strong>Last updated:</strong> 18 October 2023<br>
-        <strong>Last tested version:</strong> 1.2.22.982
+        <strong>Last updated:</strong> 11 February 2024<br>
+        <strong>Last tested version:</strong> 1.2.30.1135
     </p> 
 </center>
+
+---
 
 ## We need collaborators.
 
@@ -27,6 +25,7 @@
 - Unlocks the skip function for any track
 - Blocks Spotify automatic updates (optional)
 - Hides podcasts, episodes and audiobooks on Home Screen (optional)
+- Enable Developer Mode (optional)
 
 ### Installation/Update:
 
@@ -34,12 +33,12 @@
 - Run The following command in Terminal:
 
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh)
+bash <(curl -sSL https://raw.githubusercontent.com/Nuzair46/BlockTheSpot-Mac/main/install.sh)
 ```
 
 #### Note:
 
-- SpotX-Mac now requires codesign to sign the binaries after patching.
+- BlockTheSpot-Mac now requires codesign to sign the binaries after patching.
 - For this, you will need to have Xcode installed on your mac.
 - To install xcode, use the following command in terminal:
 
@@ -56,13 +55,14 @@ xcode-select --install
 `-h` Hide podcasts, episodes and audiobooks on home screen  
 `-P` Path to Spotify.app -- set custom Spotify app path  
 `-u` Block updated -- blocks automatic updates  
+`-d` Enable Developer Mode
 `-S` Skip Codesign -- only to be used if you have intel mac
 
 Use any combination of flags.  
 The following example clears app cache, adds experimental features, leaves new UI enabled and blocks updates:
 
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/install.sh) -hu
+bash <(curl -sSL https://raw.githubusercontent.com/Nuzair46/BlockTheSpot-Mac/main/install.sh) -hu
 ```
 
 ### Uninstall:
@@ -71,7 +71,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/inst
 - Run The following command in Terminal:
 
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/SpotX-CLI/SpotX-Mac/main/uninstall.sh)
+bash <(curl -sSL https://raw.githubusercontent.com/Nuzair46/BlockTheSpot-Mac/main/uninstall.sh)
 ```
 
 or
@@ -80,9 +80,9 @@ or
 
 ### Notes:
 
-- Audio/video ads during Podcast playback are currently NOT blocked with SpotX.
-- Spicetify users: When using SpotX-Mac + Spicetify, the current script requires running SpotX first.
+- Audio/video ads during Podcast playback are currently NOT blocked with BlockTheSpot.
+- Spicetify users: When using BlockTheSpot-Mac + Spicetify, the current script requires running BlockTheSpot first.
 
 ### DISCLAIMER
 
-- Ad blocking is the main concern of this repo. Any other feature provided by SpotX-Mac or consequence of using those features will be the sole responsibility of the user, not BlockTheSpot/SpotX/SpotX-Mac.
+- Ad blocking is the main concern of this repo. Any other feature provided by BlockTheSpot-Mac or consequence of using those features will be the sole responsibility of the user, not BlockTheSpot/BlockTheSpot-Mac.
