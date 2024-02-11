@@ -6,8 +6,9 @@
     <h1 align="center">BlockTheSpot-Mac</h1>
     <h4 align="center">A multi-purpose adblocker and skip-bypass for the <strong>Spotify for MacOS</strong> </h4>
     <h5 align="center">Please support Spotify by purchasing premium</h5>
+    <h5 align="center">For Windows, use <a href="https://github.com/mrpond/BlockTheSpot">BlockTheSpot</a></h5>
     <p align="center">
-        <strong>Last updated:</strong> 11 February 2024<br>
+        <strong>Last updated:</strong> 10 February 2024<br>
         <strong>Last tested version:</strong> 1.2.30.1135
     </p> 
 </center>
