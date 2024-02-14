@@ -56,7 +56,7 @@ xcode-select --install
 `-h` Hide podcasts, episodes and audiobooks on home screen  
 `-P` Path to Spotify.app -- set custom Spotify app path  
 `-u` Block updated -- blocks automatic updates  
-`-d` Enable Developer Mode
+`-d` Enable Developer Mode  
 `-S` Skip Codesign -- only to be used if you have intel mac
 
 Use any combination of flags.  
