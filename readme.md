@@ -9,7 +9,7 @@
     <h5 align="center">For Windows, use <a href="https://github.com/mrpond/BlockTheSpot">BlockTheSpot</a></h5>
     <p align="center">
         <strong>Last updated:</strong> 11 February 2024<br>
-        <strong>Last tested version:</strong> 1.2.30.1135
+        <strong>Last tested version:</strong> 1.2.32.985
     </p> 
 </center>
 
@@ -57,7 +57,8 @@ xcode-select --install
 `-P` Path to Spotify.app -- set custom Spotify app path  
 `-u` Block updated -- blocks automatic updates  
 `-d` Enable Developer Mode  
-`-S` Skip Codesign -- only to be used if you have intel mac
+`-S` Skip Codesign -- only to be used if you have intel mac  
+`-U` Uninstall BlockTheSpot-Mac and restore original.
 
 Use any combination of flags.  
 The following example clears app cache, adds experimental features, leaves new UI enabled and blocks updates:
@@ -72,7 +73,7 @@ bash <(curl -sSL https://raw.githubusercontent.com/Nuzair46/BlockTheSpot-Mac/mai
 - Run The following command in Terminal:
 
 ```
-bash <(curl -sSL https://raw.githubusercontent.com/Nuzair46/BlockTheSpot-Mac/main/uninstall.sh)
+bash <(curl -sSL https://raw.githubusercontent.com/Nuzair46/BlockTheSpot-Mac/main/install.sh) -U
 ```
 
 or
@@ -87,3 +88,4 @@ or
 ### DISCLAIMER
 
 - Ad blocking is the main concern of this repo. Any other feature provided by BlockTheSpot-Mac or consequence of using those features will be the sole responsibility of the user, not BlockTheSpot/BlockTheSpot-Mac.
+- All future forks/clients using this of this repo should be licensed under [AGPL-3.0 License](https://github.com/Nuzair46/BlockTheSpot-Mac/blob/main/LICENSE).
