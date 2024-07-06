@@ -149,7 +149,7 @@ echo -e "BlockTheSpot-Mac version: ${BLOCKTHESPOT_VERSION}\n"
 
 if [[ $(ver "${CLIENT_VERSION}") -lt $(ver "${BLOCKTHESPOT_VERSION}") ]]; then
   echo "This version of BlockTheSpot-Mac is not compatible with your Spotify version."
-  echo "Pleas use an older version of BlockTheSpot-Mac or update Spotify."
+  echo "Please use an older version of BlockTheSpot-Mac or update Spotify."
   exit; fi
 
 if [[ "${SKIP_CODE_SIGNATURE}" == "true" ]]; then
