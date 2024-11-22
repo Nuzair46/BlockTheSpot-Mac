@@ -70,7 +70,7 @@ XPUI_DESKTOP_MODAL_JS="${XPUI_DIR}/xpui-desktop-modals.js"
 if [[ "${UNINSTALL_FLAG}" == "true" ]]; then
   if [[ ! -f "${XPUI_BAK}" ]] || [[ ! -f "${APP_BINARY_BAK}" ]]; then
     echo -e "Backup not found, BlockTheSpot-Mac has not been used on this installation."
-    exit 
+    exit
   fi
   echo "Backup found, restoring original..."
   rm "${XPUI_SPA}"
@@ -82,7 +82,7 @@ if [[ "${UNINSTALL_FLAG}" == "true" ]]; then
 fi
 
 # Find client version
-CLIENT_VERSION=$(awk '/CFBundleShortVersionString/{getline; print}' "${INSTALL_PATH}/Contents/Info.plist" | cut -d\> -f2- | rev | cut -d. -f2- | rev)
+CLIENT_VERSION=$(defaults read "${INSTALL_PATH}/Contents/Info.plist" CFBundleVersion)
 
 # Get Mac OS Architecture
 MAC_ARCH=$(uname -m)
@@ -159,7 +159,7 @@ elif ! command -v codesign &> /dev/null; then
   echo "Install the Xcode command line tools to enable code signature checks."
   echo "With xcode-select --install";
   echo "You can try to skip code signature checks with the -S flag. Exiting..."
-  exit; 
+  exit;
 fi
 
 # xpui detection
@@ -256,7 +256,7 @@ if [[ "${XPUI_SKIP}" == "false" ]]; then
     if [[ $(ver "${CLIENT_VERSION}") -ge $(ver "1.1.98.683") ]]; then
       echo "Hiding non-music items on home screen..."
       $PERL "${HIDE_PODCASTS3}" "${XPUI_JS}"; fi; fi; fi
-  
+
 # Automatic updates handling
 if [[ "${UPDATE_FLAG}" == "true" ]]; then
   echo "Blocking updates..."
