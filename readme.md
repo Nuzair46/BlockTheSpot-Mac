@@ -11,7 +11,7 @@
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <h5 align="center">For Windows, use <a href="https://github.com/mrpond/BlockTheSpot">BlockTheSpot</a></h5>
     <p align="center">
-        <strong>Last updated:</strong> 06 July 2024<br>
+        <strong>Last updated:</strong> 17 December 2024<br>
         <strong>Last tested version:</strong> 1.2.32.985
     </p> 
 </center>
