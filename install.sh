@@ -82,7 +82,8 @@ if [[ "${UNINSTALL_FLAG}" == "true" ]]; then
 fi
 
 # Find client version
-CLIENT_VERSION=$(awk '/CFBundleShortVersionString/{getline; print}' "${INSTALL_PATH}/Contents/Info.plist" | cut -d\> -f2- | rev | cut -d. -f2- | rev)
+#Fix Using plutil:"awk: towc: multibyte conversion failure on: '?! '"
+CLIENT_VERSION=$(plutil -p "${INSTALL_PATH}/Contents/Info.plist" | grep CFBundleShortVersionString | awk -F'"' '{print $4}')
 
 # Get Mac OS Architecture
 MAC_ARCH=$(uname -m)
