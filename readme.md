@@ -1,3 +1,6 @@
+## I'm busy with life and other projects. I don't get enough free time to commit to this project anymore. For now, I will archive this project until further notice. To keep using this, please try to use the last tested version and stay in that version with the block updates option. If you are interested in maintaining this project, please contact me on Discord. Thanks for sticking with this project.
+
+
 <p align="center">        
   <a href="https://discord.gg/eYudMwgYtY"><img src="https://discord.com/api/guilds/807273906872123412/widget.png"></a>
 </p>
@@ -8,7 +11,7 @@
     <h5 align="center">Please support Spotify by purchasing premium</h5>
     <h5 align="center">For Windows, use <a href="https://github.com/mrpond/BlockTheSpot">BlockTheSpot</a></h5>
     <p align="center">
-        <strong>Last updated:</strong> 06 July 2024<br>
+        <strong>Last updated:</strong> 17 December 2024<br>
         <strong>Last tested version:</strong> 1.2.32.985
     </p> 
 </center>
